@@ -1,0 +1,18 @@
+[
+  {
+    "username": "test",
+    "password": "test",
+    "account-link": [
+      {
+        "name": "Google",
+        "token": ""
+      }
+    ],
+    "action": [
+      {
+        "name": "Drink Water",
+        "activate": true
+      }
+    ] 
+  }
+]
