@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  client:
+    build: client/
+    ports:
+      - "3000:3000"
+    networks:
+    - frontend
+  server:
+    build: server/
+    ports:
+      - "8080:8080"
+    networks:
+    - backend
+
+networks:
+  frontend:
+  backend:
