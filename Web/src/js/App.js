@@ -1,4 +1,4 @@
-import {Auth, signOutFirebase} from './Auth.js'
+import {Auth} from './Auth.js'
 import '../css/App.css';
 import '../css/workspace.css';
 import {
@@ -50,7 +50,6 @@ var widget = [0, 0, 0, 0, 0, 0]
 
 function Disconnect() {
   axios.post("http://localhost:8080/user/disconnect/", {"widget": widget});
-  signOutFirebase();
   return(
     <div className="Service">
       <Navigate replace to="/"/>;
