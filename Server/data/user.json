@@ -13,6 +13,38 @@
         "name": "Drink Water",
         "activate": true
       }
-    ] 
+    ]
+  },
+  {
+    "username": "emailtest@test.com",
+    "password": "aze",
+    "account-link": [
+      {
+        "name": "Google",
+        "token": ""
+      }
+    ],
+    "action": [
+      {
+        "name": "Drink Water",
+        "activate": false
+      }
+    ]
+  },
+  {
+    "username": "test@test",
+    "password": "poi",
+    "account-link": [
+      {
+        "name": "Google",
+        "token": ""
+      }
+    ],
+    "action": [
+      {
+        "name": "Drink Water",
+        "activate": false
+      }
+    ]
   }
 ]

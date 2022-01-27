@@ -15,10 +15,13 @@ app.use(bodyParser.json());
 app.use(cors());
 
 function saveJson(){
+  console.log(data);
+  data[JsonPos] = dictUser;
   fs.writeFileSync("data/user.json", JSON.stringify(data, null, 2), (err) => {
-    if (err)
+    if (err) {
+      console.log("File not written successfully\n");
       console.log(err);
-    else {
+    } else {
       console.log("File written successfully\n");
     }
   });
@@ -57,13 +60,14 @@ function findUserDict(username) {
   })
 }
 
+// username + password
 app.post('/user/connect/', (req, res) => {
   console.log("connect");
   if (req.body.user !== null) {
-    findUserDict(req.body.user.username);
+    findUserDict(req.body.username);
     if (JsonPos == -1) {
       console.log("User not found.");
-    } else if (req.body.user.password == dictUser["password"]) {
+    } else if (req.body.password == dictUser["password"]) {
       isConnected = 1;
       console.log("Connect user.");
       console.log(dictUser);
@@ -73,15 +77,19 @@ app.post('/user/connect/', (req, res) => {
   }
 });
 
+// username + password
 app.post('/user/create/', (req, res) => {
-  if (req.body.user !== null) {
-    findUserDict(req.body.user.username);
+  console.log(req.body)
+  if (req.body.username !== null) {
+    findUserDict(req.body.username);
     if (dictUser["username"] == "") {
       isConnected = 1;
-      dictUser["username"] = username;
-      dictUser["password"] = password;
+      dictUser["username"] = req.body.username;
+      dictUser["password"] = req.body.password;
       console.log("create");
       console.log(dictUser);
+      data.push(dictUser);
+      JsonPos = data.length - 1
     } else {
       console.log("Account already taken.");
     }
@@ -96,6 +104,7 @@ app.get('/user/connected/', (req, res) => {
 app.post('/user/disconnect/', (req, res) => {
   isConnected = 0;
   if (req.body != null && dictUser != null) {
+    console.log("SAVE");
     saveJson();
   }
   console.log("disconnect");

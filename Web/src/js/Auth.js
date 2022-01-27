@@ -4,19 +4,15 @@ import axios from 'axios'
 import {useState} from 'react'
 import '../css/Auth.css';
 
-function ConnectUser(user){
-  console.log("try to connect");
-  axios.post("http://localhost:8080/user/connect/", {"user": user});
-}
 
 function register(email, password) {
   console.log("register -> To modify");
-  ConnectUser(email);
+  axios.post("http://localhost:8080/user/create/", {"username": email, "password": password});
 }
 
 function signIn(email, password) {
-  ConnectUser(email);
   console.log("signIn -> To modify");
+  axios.post("http://localhost:8080/user/connect/", {"username": email, "password": password});
 }
 
 function signInWithGoogle() {
