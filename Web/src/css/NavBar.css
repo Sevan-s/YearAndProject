@@ -1,0 +1,47 @@
+nav {
+    height: 50px;
+    background: rgb(0, 0, 0);
+}
+
+.list {
+    list-style-type: none;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.items {
+    margin-right: 50px;
+    color: #f1f1f1;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.itemsTitle {
+    display: relative;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    color: #f1f1f1;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.itemsSignOut {
+    display: relative;
+    position: absolute;
+    top: 15px;
+    left: calc(100% - 80px);
+    color: #f1f1f1;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.items:hover, .itemsSignOut:hover {
+    color: rgb(255, 0, 0);
+}
