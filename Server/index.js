@@ -49,7 +49,7 @@ function newAccountLink() {
 }
 
 function findUserDict(username) {
-  dictUser = {"username": "", "password": "", "account-link": newAccountLink(), "action": newUserAction()};
+  dictUser = {"username": "", "password": "", "account-link": newAccountLink(), "action": newUserAction(), "OAUTH": false};
   x = 0
   data.forEach(element => {
     if (element.username == username) {
@@ -60,14 +60,15 @@ function findUserDict(username) {
   })
 }
 
-// username + password
+// username + password + true/false
 app.post('/user/connect/', (req, res) => {
   console.log("connect");
   if (req.body.user !== null) {
     findUserDict(req.body.username);
     if (JsonPos == -1) {
       console.log("User not found.");
-    } else if (req.body.password == dictUser["password"]) {
+    } else if (req.body.password == dictUser["password"] &&
+    dictUser["OAUTH"] == req.body.OAUTH) {
       isConnected = 1;
       console.log("Connect user.");
       console.log(dictUser);

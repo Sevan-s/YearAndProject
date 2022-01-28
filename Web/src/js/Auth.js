@@ -9,12 +9,12 @@ import ReactDOM from 'react-dom';
 
 function register(email, password) {
   console.log("register -> To modify");
-  axios.post("http://localhost:8080/user/create/", {"username": email, "password": password});
+  axios.post("http://localhost:8080/user/create/", {"username": email, "password": password, "OAUTH": false});
 }
 
 function signIn(email, password) {
   console.log("signIn -> To modify");
-  axios.post("http://localhost:8080/user/connect/", {"username": email, "password": password});
+  axios.post("http://localhost:8080/user/connect/", {"username": email, "password": password, "OAUTH": false});
 }
 
 const responseGoogle = (response) => {
