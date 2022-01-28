@@ -13,7 +13,8 @@
         "name": "Drink Water",
         "activate": true
       }
-    ]
+    ],
+    "OAUTH": false
   },
   {
     "username": "emailtest@test.com",
@@ -29,22 +30,7 @@
         "name": "Drink Water",
         "activate": false
       }
-    ]
-  },
-  {
-    "username": "test@test",
-    "password": "poi",
-    "account-link": [
-      {
-        "name": "Google",
-        "token": ""
-      }
     ],
-    "action": [
-      {
-        "name": "Drink Water",
-        "activate": false
-      }
-    ]
+    "OAUTH": true
   }
 ]
