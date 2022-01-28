@@ -3,6 +3,8 @@ import { Navigate } from "react-router-dom";
 import axios from 'axios'
 import {useState} from 'react'
 import '../css/Auth.css';
+import GoogleLogin from 'react-google-login';
+import ReactDOM from 'react-dom';
 
 
 function register(email, password) {
@@ -15,8 +17,8 @@ function signIn(email, password) {
   axios.post("http://localhost:8080/user/connect/", {"username": email, "password": password});
 }
 
-function signInWithGoogle() {
-  console.log("signInGoogle -> To ADD");
+const responseGoogle = (response) => {
+  console.log(response);
 }
 
 function Auth(props) {
@@ -41,7 +43,14 @@ function Auth(props) {
           </div>
           <button className="register-button" onClick={() => signIn(document.getElementById("uname").value, document.getElementById("psw").value)} type="submit">Sign In</button>
         </div>
-        <button className="google-button" onClick={() => signInWithGoogle()} type="submit">Sign in with Google</button>
+        <GoogleLogin
+        clientId="748486023082-7d0a346g33366k9ftbp37n0u2jh70fcr.apps.googleusercontent.com"
+        render={renderProps => (
+          <button class="google-button" onClick={renderProps.onClick}>Login with Google</button>
+        )}
+        onSuccess={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+        />
       </form>
     </div>
   );
