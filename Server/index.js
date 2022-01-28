@@ -87,12 +87,34 @@ app.post('/user/create/', (req, res) => {
       isConnected = 1;
       dictUser["username"] = req.body.username;
       dictUser["password"] = req.body.password;
+      dictUser["OAUTH"] = req.body.OAUTH;
       console.log("create");
       console.log(dictUser);
       data.push(dictUser);
       JsonPos = data.length - 1
     } else {
       console.log("Account already taken.");
+    }
+  }
+});
+
+// username + password
+app.post('/user/oauth/', (req, res) => {
+  console.log(req.body)
+  if (req.body.username !== null) {
+    findUserDict(req.body.username);
+    if (dictUser["username"] == "") {
+      isConnected = 1;
+      dictUser["username"] = req.body.username;
+      dictUser["password"] = req.body.password;
+      dictUser["OAUTH"] = req.body.OAUTH;
+      console.log("create");
+      console.log(dictUser);
+      data.push(dictUser);
+      JsonPos = data.length - 1
+    } else if (req.body.password == dictUser["password"]) {
+      isConnected = 1;
+      console.log("connect");
     }
   }
 });
@@ -151,6 +173,7 @@ app.get('/user/getAccountLink/', (req, res) => {
   res.json({"account-link": dictUser['account-link']});
 });
 
+// token + name
 app.post('/user/setAccountLink/', (req, res) => {
   console.log("stock: " + req.body.token)
   passed = false
