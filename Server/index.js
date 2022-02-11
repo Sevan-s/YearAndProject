@@ -1,9 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+const CheckAction = require('./apiRequest'); 
 var cors = require('cors');
 const app = express()
 const port = 8080
 const fs = require('fs');
+const { request } = require('http');
 const data = JSON.parse(fs.readFileSync('./data/user.json', 'utf8'))
 
 var isConnected = 0;
@@ -34,7 +36,8 @@ function newUserAction() {
   return [
     {
       "name": "Drink Water",
-      "activate": false
+      "activate": false,
+      "reaction": []
     }
   ]
 }
@@ -62,6 +65,7 @@ function findUserDict(username) {
 
 // username + password + true/false
 app.post('/user/connect/', (req, res) => {
+  appendToQueue(test)
   console.log("connect");
   if (req.body.user !== null) {
     findUserDict(req.body.username);
@@ -256,5 +260,7 @@ app.get('/about.json', (req, res) => {
 /////////////////////
 
 app.listen(port, () => {
+  CheckAction.requestApi();
+  CheckAction.addToQueue("test");
   console.log(`Example app listening at http://localhost:${port}`)
 })
