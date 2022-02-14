@@ -260,7 +260,7 @@ app.get('/about.json', (req, res) => {
 /////////////////////
 
 app.listen(port, () => {
-  CheckAction.requestApi();
-  CheckAction.addToQueue("test");
+  CheckAction.requestApi(1);
+  CheckAction.addToQueue("test-A", 1, "test-R");
   console.log(`Example app listening at http://localhost:${port}`)
 })
