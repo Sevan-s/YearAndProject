@@ -13,7 +13,10 @@ export default function Footer () {
 
 const styles = StyleSheet.create({
     footer: {
+        position: 'absolute',
         alignItems: 'center',
+        left:0,
+        right:0,
         bottom: 0,
     },
     foot: {

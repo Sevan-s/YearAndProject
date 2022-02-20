@@ -7,6 +7,7 @@ import GoogleButton from './googleButton';
 import LoginButton from './LogInButton';
 import ConnectionInput from './ConnectionInput';
 import Footer from './footer';
+import Header from './Header';
 
 function Connection({navigation}) {
 
@@ -28,11 +29,11 @@ function Connection({navigation}) {
                             <Text style={styles.or}>or</Text>
                             <GoogleButton />
                         </View>
-                        <View style={styles.createAccountRedirection}>
-                            <Text style={styles.CreateAccountTxt}>Don't have an account?</Text>
-                            <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Register')}>
-                            Register now</Text>
-                        </View>
+                    </View>
+                    <View style={styles.createAccountRedirection}>
+                        <Text style={styles.CreateAccountTxt}>Don't have an account?</Text>
+                        <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Register')}>
+                        Register now</Text>
                     </View>
                 </View>
                 <Footer/>
@@ -44,25 +45,25 @@ const styles = StyleSheet.create({
     body: {
         height: '100%',
     },
-    bodyTop: {
-        height: '95%',
-    },
 
     connectionBody: {
         backgroundColor: 'black',
         marginTop: 60,
         marginLeft: 40,
         marginRight: 40,
-        height: 514,
+        marginBottom: 40,
         borderRadius: 10,
+        paddingBottom: 20,
     },
     createAccountRedirection: {
-        height: 62,
         backgroundColor: 'black',
-        marginTop: 40,
         borderRadius:10,
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        marginLeft: 40,
+        marginRight: 40,
+        paddingBottom: 10,
+        paddingTop: 10,
     },
 
     Title: {

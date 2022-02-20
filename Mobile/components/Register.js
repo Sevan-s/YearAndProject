@@ -7,6 +7,7 @@ import CreateAccount from './CreateAccountInput';
 import RegisterButton from './RegisterButton';
 import GoogleButton from './googleButton';
 import Footer from './footer';
+import Header from './Header';
 
 
 function Register({ navigation }) {
@@ -23,17 +24,17 @@ function Register({ navigation }) {
                         <Text style={styles.text}>Widget</Text>
                         <Text style={styles.text}>Services</Text>
                         <CreateAccount />
+                        <View style={styles.button}>
+                            <RegisterButton />
+                            <Text style={styles.or}>or</Text>
+                            <GoogleButton />
+                        </View>
                     </View>
-                    <View style={styles.button}>
-                        <RegisterButton />
-                        <Text style={styles.or}>or</Text>
-                        <GoogleButton />
-                    </View>
-                    <View style={styles.connect}>
-                        <Text style={styles.CreateAccountTxt}>Have an account?</Text>
-                        <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Connection')}>
-                            Log in now</Text>
-                    </View>
+                </View>
+                <View style={styles.connect}>
+                    <Text style={styles.CreateAccountTxt}>Have an account?</Text>
+                    <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Connection')}>
+                    Log in now</Text>
                 </View>
             </View>
             <Footer />
@@ -53,8 +54,8 @@ const styles = StyleSheet.create({
         marginTop: 60,
         marginLeft: 40,
         marginRight: 40,
-        height: 589,
         borderRadius: 10,
+        paddingBottom: 20,
     },
     Title: {
         marginTop: 25,
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Prata_400Regular',
     },
     button: {
-        marginTop: 80,
         alignItems: 'center',
     },
     or: {
@@ -77,12 +77,15 @@ const styles = StyleSheet.create({
         fontFamily: 'Prata_400Regular',
     },
     connect: {
-        height: 62,
         backgroundColor: 'black',
         marginTop: 40,
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginLeft: 40,
+        marginRight: 40,
+        paddingBottom: 10,
+        paddingTop: 10,
     },
     CreateAccountTxt: {
         color: 'white',

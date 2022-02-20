@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
   
     txtInput: {
         marginTop: 34,
-        width:275,
-        height: 34,
+        marginBottom: 40,
     },
   
     inputTitle: {

@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
         paddingRight: 42,
         paddingTop: 2,
         paddingBottom: 3,
-        marginTop: 120,
-        height: 34,
-        width: 151,
     },
   
     buttonTxt: {

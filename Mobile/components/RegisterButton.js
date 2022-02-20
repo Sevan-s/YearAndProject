@@ -20,11 +20,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 12,
         paddingLeft: 30,
+        paddingRight: 30,
         paddingTop: 2,
         paddingBottom: 3,
-        marginTop: 120,
-        height: 34,
-        width: 151,
     },
   
     buttonTxt: {
