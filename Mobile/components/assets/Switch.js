@@ -21,16 +21,15 @@ const SwitchButton = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
     flexDirection: 'row',
+    justifyContent: "flex-end"
   },
   cardStatus: {
     color: "white",
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 169,
     marginRight:20,
+    
 },
 });
 
