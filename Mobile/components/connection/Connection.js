@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable 
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
-import GoogleButton from './googleButton';
-import LoginButton from './LogInButton';
-import ConnectionInput from './ConnectionInput';
-import Footer from './footer';
-import Header from './Header';
+import LoginButton from '../LogInButton';
+import ConnectionInput from '../assets/ConnectionInput';
+import Footer from '../assets/footer';
+import Header from '../assets/Header';
+import GoogleConnexion from '../Oauth/Google';
 
 function Connection({navigation}) {
 
@@ -27,7 +27,7 @@ function Connection({navigation}) {
                         <View style={styles.button}>
                             <LoginButton />
                             <Text style={styles.or}>or</Text>
-                            <GoogleButton />
+                            <GoogleConnexion/>
                         </View>
                     </View>
                     <View style={styles.createAccountRedirection}>

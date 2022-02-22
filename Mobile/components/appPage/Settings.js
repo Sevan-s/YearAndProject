@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
-import Header from '../Header';
+import Header from '../assets/Header';
 
 export default function Settings () {
     return (

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
-import Homepage from '../components/HomePage';
+import Homepage from '../components/appPage/HomePage';
 import ADD from '../components/appPage/Add';
 import Search from '../components/appPage/Search';
 import Profile from '../components/appPage/Profile';

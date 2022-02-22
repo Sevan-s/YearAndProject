@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import Connection from './components/Connection'
-import Register from './components/Register';
-import { StyleSheet, Text, View} from 'react-native';
+import Connection from './components/connection/Connection'
+import Register from './components/connection/Register';
+import { StyleSheet, Text, View, useState} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Card from './components/Card';
-import Homepage from './components/HomePage';
-import Details from './components/details';
+import Homepage from './components/appPage/HomePage';
 import Tabs from './navigation/Navigation';
 
 const Stack = createNativeStackNavigator();
-let connected = 1;
+let connected = false;
 
 export default function App() {
-  if (connected == 1)
+  if (connected == true)
     return (
       <NavigationContainer>
         <Tabs/>

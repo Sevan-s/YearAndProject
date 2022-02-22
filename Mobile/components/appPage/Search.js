@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
-import Header from '../Header';
+import Header from '../assets/Header';
+import SearchHeader from '../assets/SearchHeader';
 
 export default function Search () {
     return (
         <View>
-            <Header/>
+            <SearchHeader/>
             <View style={styles.p}>
                 <Text>Search</Text>
             </View>
