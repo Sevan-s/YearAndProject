@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Switch, StyleSheet } from "react-native";
+import { View, Switch, StyleSheet, Text } from "react-native";
 
 const SwitchButton = () => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -7,6 +7,7 @@ const SwitchButton = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.cardStatus}>{isEnabled ? "Activated" : "Desactivated"}</Text>
       <Switch
         trackColor={{ false: "#FF0000", true: "green" }}
         thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
@@ -21,8 +22,16 @@ const SwitchButton = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+    flexDirection: 'row',
+  },
+  cardStatus: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 169,
+    marginRight:20,
+},
 });
 
 export default SwitchButton;

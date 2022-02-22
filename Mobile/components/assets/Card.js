@@ -14,7 +14,6 @@ export default function Card(props) {
                 <Text style={styles.cardTitle}>{props.Title}</Text>
                 <Text style={styles.cardTxt}>{props.Txt}</Text>
                 <View style={styles.switchStatus}>
-                    <Text style={styles.cardStatus}>{props.Status}</Text>
                     <SwitchButton/>
                 </View>
             </View>
@@ -25,8 +24,9 @@ export default function Card(props) {
 const styles = StyleSheet.create({
 
     switchStatus: {
-        flexDirection: 'row',
         marginRight: 20,
+        paddingBottom: 20,
+        marginTop:10
     },
 
     body: {
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 20,
         marginRight: 20,
-
         fontSize: 14,
     },
 

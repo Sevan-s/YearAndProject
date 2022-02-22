@@ -9,7 +9,7 @@ import Homepage from './components/appPage/HomePage';
 import Tabs from './navigation/Navigation';
 
 const Stack = createNativeStackNavigator();
-let connected = false;
+let connected = true;
 
 export default function App() {
   if (connected == true)
