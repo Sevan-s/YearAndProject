@@ -9,41 +9,47 @@ import Card from '../assets/Card';
 
 
 export default function Homepage() {
+
     let [fontsLoaded] = useFonts({
         Prata_400Regular,
     });
-    return (
-        <View style={styles.body}>
-            <Header/>
-            <ScrollView>
-            <Card Title="Title of the A/R" 
-                Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                Status="Status"
-                style={styles.card}/>
-            <Card Title="Title of the A/R" 
-                Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                Status="Status"
-                style={styles.card}/>
-            <Card Title="Title of the A/R" 
-                Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                Status="Status"
-                style={styles.card}/>
-            <Card Title="Title of the A/R" 
-                Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                Status="Status"
-                style={styles.card}/>
-            <Card Title="Title of the A/R" 
-                Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                Status="Status"
-                style={styles.card}/>
-            </ScrollView>
-        </View>
-    );
+
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    } else {
+        return (
+            <View style={styles.body}>
+                <Header />
+                <ScrollView>
+                    <Card Title="Title of the A/R"
+                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
+                        Status="Status"
+                        style={styles.card} />
+                    <Card Title="Title of the A/R"
+                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
+                        Status="Status"
+                        style={styles.card} />
+                    <Card Title="Title of the A/R"
+                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
+                        Status="Status"
+                        style={styles.card} />
+                    <Card Title="Title of the A/R"
+                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
+                        Status="Status"
+                        style={styles.card} />
+                    <Card Title="Title of the A/R"
+                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
+                        Status="Status"
+                        style={styles.card} />
+                </ScrollView>
+            </View>
+        );
+    }
 };
 
 const styles = StyleSheet.create({
     body: {
-        height:'100%',
+        height: '100%',
     },
 
     card: {

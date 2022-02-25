@@ -1,19 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
-import React from 'react';
 import AppLoading from 'expo-app-loading';
 import LoginButton from '../assets/LogInButton';
 import ConnectionInput from '../assets/ConnectionInput';
 import Footer from '../assets/footer';
 import Header from '../assets/Header';
 import GoogleConnexion from '../Oauth/Google';
+import React, { useState } from "react";
 
 function Connection({navigation}) {
 
     let [fontsLoaded] = useFonts({
         Prata_400Regular,
     });
+    if (!fontsLoaded) {
+        return <AppLoading />;
+      } else {
         return (
             <View style={styles.body}>
                 <View style={styles.bodyTop}>
@@ -27,7 +30,7 @@ function Connection({navigation}) {
                         <View style={styles.button}>
                             <LoginButton />
                             <Text style={styles.or}>or</Text>
-                            <GoogleConnexion/>
+                            <GoogleConnexion />
                         </View>
                     </View>
                     <View style={styles.createAccountRedirection}>
@@ -39,6 +42,7 @@ function Connection({navigation}) {
                 <Footer/>
             </View>
         );
+    }
 }
 
 const styles = StyleSheet.create({
