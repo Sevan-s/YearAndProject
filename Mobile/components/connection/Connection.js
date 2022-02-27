@@ -16,7 +16,7 @@ function Connection({navigation}) {
     });
     if (!fontsLoaded) {
         return <AppLoading />;
-      } else {
+    } else {
         return (
             <View style={styles.body}>
                 <View style={styles.bodyTop}>

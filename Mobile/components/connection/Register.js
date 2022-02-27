@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable, ScrollView } from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
@@ -10,7 +10,6 @@ import Header from '../assets/Header';
 import GoogleConnexion from '../Oauth/Google';
 
 
-
 function Register({ navigation }) {
 
     let [fontsLoaded] = useFonts({
@@ -18,6 +17,7 @@ function Register({ navigation }) {
     });
     return (
         <View style={styles.body}>
+            <ScrollView>
             <View style={styles.bodyTop}>
                 <View style={styles.RegisterBody}>
                     <View style={styles.Title}>
@@ -34,11 +34,13 @@ function Register({ navigation }) {
                 </View>
                 <View style={styles.connect}>
                     <Text style={styles.CreateAccountTxt}>Have an account?</Text>
-                    <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Connection')}>
+                    <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Global')}>
                     Log in now</Text>
                 </View>
             </View>
-            <Footer />
+            <View style={styles.blank}></View>
+            <Footer/>
+            </ScrollView>
         </View>
     );
 };
@@ -94,5 +96,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textDecorationLine: 'underline',
     },
+    blank: {
+        height: 40
+    }
 });
 export default Register;

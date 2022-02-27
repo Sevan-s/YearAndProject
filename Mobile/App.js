@@ -8,30 +8,31 @@ import Homepage from './components/appPage/HomePage';
 import Tabs from './navigation/Navigation';
 import React, { useState } from "react";
 import AppLoading from 'expo-app-loading';
-
+import axios from 'axios';
 
 const Stack = createNativeStackNavigator();
 
+async function getConnectVal() {
+  var connect = 0
+  await axios.get("http://10.0.0.2:8080/user/connected/")
+    .then(res => {
+      const data = res.data;
+      connect = data.isConnected;
+  })
+  return (connect);
+}
+
 export default function App() {
-  const [connect, setConnected] = useState(true);
-  if (connect == true)
-    return (
-      <NavigationContainer>
-        <Tabs/>
-      </NavigationContainer>
-    )
-  else
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Screen name="Connection" options={connect} component={Connection} />
-        <Stack.Screen name="Register" component={Register} />
-      </Stack.Navigator>
-    </NavigationContainer>
+  const [connect, setConnected] = useState(0);
+  getConnectVal().then(data => setConnected(1))
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Connection" component={Connection} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Global" component={Tabs} />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 
