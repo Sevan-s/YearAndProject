@@ -1,165 +1,125 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+const CheckAction = require('./apiRequest'); 
+const DBCommunicate = require('./communicateDB')
 var cors = require('cors');
 const app = express()
 const port = 8080
 const fs = require('fs');
 const data = JSON.parse(fs.readFileSync('./data/user.json', 'utf8'))
 
-var isConnected = 0;
-var dictUser = null;
-var JsonPos = -1;
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
 
-function saveJson(){
-  console.log(data);
-  data[JsonPos] = dictUser;
-  fs.writeFileSync("data/user.json", JSON.stringify(data, null, 2), (err) => {
-    if (err) {
-      console.log("File not written successfully\n");
-      console.log(err);
-    } else {
-      console.log("File written successfully\n");
-    }
-  });
-}
+/////////////////////// DATABASE
 
+var isConnected = 0;
+var accountID = "";
+
+DBCommunicate.connect()
+
+//////////////////////
 
 /////////////// USER CONNECTION
-
-function newUserAction() {
-  return [
-    {
-      "name": "Drink Water",
-      "activate": false
-    }
-  ]
-}
-
-function newAccountLink() {
-  return [
-    {
-      "name": "Google",
-      "token": ""
-    }
-  ]
-}
-
-function findUserDict(username) {
-  dictUser = {"username": "", "password": "", "account-link": newAccountLink(), "action": newUserAction(), "OAUTH": false};
-  x = 0
-  data.forEach(element => {
-    if (element.username == username) {
-      JsonPos = x;
-      dictUser = element;
-    }
-    x += 1
-  })
-}
 
 // username + password + true/false
 app.post('/user/connect/', (req, res) => {
   console.log("connect");
-  if (req.body.user !== null) {
-    findUserDict(req.body.username);
-    if (JsonPos == -1) {
-      console.log("User not found.");
-    } else if (req.body.password == dictUser["password"] &&
-    dictUser["OAUTH"] == req.body.OAUTH) {
-      isConnected = 1;
-      console.log("Connect user.");
-      console.log(dictUser);
-    } else {
-      console.log("Can't connect user");
-    }
+  if (req.body.username !== null) {
+    DBCommunicate.getUser(req.body.username, function(data) {
+      if (data.length == 0)
+        console.log("User not found.")
+      else if (data[0]['password'] == req.body.password &&
+      data[0]["OAUTH"] == req.body.OAUTH) {
+        isConnected = 1; // temporary
+        accountID = data[0]['id'];
+        console.log("Connect user.");
+        //CheckAction.requestApi(username);
+      } else
+        console.log("Can't connect user");
+    })
   }
 });
 
 // username + password
 app.post('/user/create/', (req, res) => {
-  console.log(req.body)
-  if (req.body.username !== null) {
-    findUserDict(req.body.username);
-    if (dictUser["username"] == "") {
-      isConnected = 1;
-      dictUser["username"] = req.body.username;
-      dictUser["password"] = req.body.password;
-      dictUser["OAUTH"] = req.body.OAUTH;
-      console.log("create");
-      console.log(dictUser);
-      data.push(dictUser);
-      JsonPos = data.length - 1
-    } else {
-      console.log("Account already taken.");
+  if (req.body.username != null && req.body.password !== '')
+  DBCommunicate.getUser(req.body.username, function(data) {
+    if (data.length != 0)
+      console.log("Username already used.")
+    else {
+      console.log("User create.")
+      isConnected = 1 // temporary
+      DBCommunicate.addUser(req.body.username, req.body.password, false, function(_, data) {
+        accountID = data["generated_keys"][0];
+        //CheckAction.requestApi(req.body.username);
+      })
     }
-  }
+  })
 });
 
-// username + password
-app.post('/user/oauth/', (req, res) => {
-  console.log(req.body)
-  if (req.body.username !== null) {
-    findUserDict(req.body.username);
-    if (dictUser["username"] == "") {
-      isConnected = 1;
-      dictUser["username"] = req.body.username;
-      dictUser["password"] = req.body.password;
-      dictUser["OAUTH"] = req.body.OAUTH;
-      console.log("create");
-      console.log(dictUser);
-      data.push(dictUser);
-      JsonPos = data.length - 1
-    } else if (req.body.password == dictUser["password"]) {
-      isConnected = 1;
-      console.log("connect");
-    }
-  }
-});
-
+// Doit le modif
 app.get('/user/connected/', (req, res) => {
   res.json({"isConnected": isConnected});
   console.log("check->" + String(isConnected));
 });
 
+
+// Doit le modif
 app.post('/user/disconnect/', (req, res) => {
   isConnected = 0;
-  if (req.body != null && dictUser != null) {
-    console.log("SAVE");
-    saveJson();
-  }
+  accountID = "";
   console.log("disconnect");
 });
 
-////////////////////
+//////////////////////
 
 /////////////// ACTION
 
 app.get('/user/getAction/', (req, res) => {
   console.log("Action ->");
-  console.log(dictUser['action']);
-  res.json({"action": dictUser['action']});
+  DBCommunicate.getUserByID(accountID, function(data) {
+    console.log(data['action']);
+    res.json({"action": data['action']});
+  })
 });
 
+// NEED TO MODIFY
 app.post('/user/switchAction/', (req, res) => {
-  passed = false
   if (typeof req.body.token != 'undefined' && typeof req.body.name != 'undefined' ) {
-    dictUser["action"].forEach(element => {
-      if (element.name == req.body.name) {
-        passed = true;
-        if (element.activate == false)
-          element.activate = true;
-        else
-          element.activate = false;
-      }
-      x += 1
+    DBCommunicate.getUserByID(accountID, function(data) {
+      data['action'].forEach(element => {
+        if (element.name == req.body.name) {
+          if (element.activate)
+            element.activate = false;
+          else
+            element.activate = true;
+          console.log("Action switch.");
+          // a modif
+          //CheckAction.addToQueue(req.body.name, req.body.username, req.body.reaction);
+        }
+      })
     })
-    if (passed == true)
-      console.log("Action switch.");
-    else
-      console.log("Action not found.")
+  }
+});
+
+// action + reaction
+// NEED TO MODIFY
+app.post('/user/switchReaction/', (req, res) => {
+  if (typeof req.body.reaction != 'undefined' && typeof req.body.action != 'undefined') {
+    DBCommunicate.getUserByID(accountID, function(data) {
+      data['action'].forEach(element => {
+        if (element.action == req.body.name) {
+          if (element['reaction'].includes(req.body.reaction))
+            console.log("NEED TO REMOVE")
+          else
+            console.log("NEED TO ADD")
+          // a modif
+          //CheckAction.addToQueue(req.body.name, req.body.username, req.body.reaction);
+        }
+      })
+    })
   }
 });
 
@@ -169,26 +129,25 @@ app.post('/user/switchAction/', (req, res) => {
 
 app.get('/user/getAccountLink/', (req, res) => {
   console.log("AccountLink ->");
-  console.log(dictUser['account-link']);
-  res.json({"account-link": dictUser['account-link']});
+  DBCommunicate.getUserByID(accountID, function(data) {
+    console.log(data['account_link']);
+    res.json({"account-link": data['account_link']});
+  })
 });
 
 // token + name
+// NEED TO MODIFY
 app.post('/user/setAccountLink/', (req, res) => {
   console.log("stock: " + req.body.token)
-  passed = false
   if (typeof req.body.token != 'undefined' && typeof req.body.name != 'undefined' ) {
-    dictUser["account-link"].forEach(element => {
-      if (element.name == req.body.name) {
-        passed = true;
-        element.token = req.body.token;
-      }
-      x += 1
+    DBCommunicate.getUserByID(accountID, function(data) {
+      data['account_link'].forEach(element => {
+        if (element.name == req.body.name) {
+          element.token = req.body.token;
+          console.log("Token set.");
+        }
+      })
     })
-    if (passed == true)
-      console.log("Token set.");
-    else
-      console.log("Account Type not found.")
   }
 });
 
