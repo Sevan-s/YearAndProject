@@ -6,11 +6,12 @@ COPY package*.json ./
 
 COPY  . /app
 
-ENV PORT 8081
+ENV PORT 8080
 ENV PATH /app/node_modules/.bin:$PATH
 
 RUN npm install --silent
+RUN npm install -g nodemon
 
-EXPOSE 8081
+EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["nodemon", ""]

@@ -11,7 +11,8 @@
     "action": [
       {
         "name": "Drink Water",
-        "activate": true
+        "activate": true,
+        "reaction": []
       }
     ],
     "OAUTH": false
@@ -28,7 +29,8 @@
     "action": [
       {
         "name": "Drink Water",
-        "activate": false
+        "activate": false,
+        "reaction": []
       }
     ],
     "OAUTH": true
