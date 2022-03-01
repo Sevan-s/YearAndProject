@@ -1,16 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable, ScrollView } from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
-import React from 'react';
-import AppLoading from 'expo-app-loading';
+import React, { useState } from 'react';
 import CreateAccount from '../assets/CreateAccountInput';
 import RegisterButton from '../assets/RegisterButton';
 import Footer from '../assets/footer';
-import Header from '../assets/Header';
 import GoogleConnexion from '../Oauth/Google';
 
-
-function Register({ navigation }) {
+function Register({ route, navigation }) {
+    /////////////////// SWITCH IF USER CONNECTED
+    const [connect, setConnected] = useState(0);
+    const {conn} = route.params
+    conn.then(data => setConnected(data))
+    if (connect === 1)
+        navigation.navigate('Global')
+    ////////////////////////////////////////////
 
     let [fontsLoaded] = useFonts({
         Prata_400Regular,
@@ -33,8 +36,8 @@ function Register({ navigation }) {
                     </View>
                 </View>
                 <View style={styles.connect}>
-                    <Text style={styles.CreateAccountTxt}>Have an account?</Text>
-                    <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Global')}>
+                    <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Connection')}>Have an account?</Text>
+                    <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Connection')}>
                     Log in now</Text>
                 </View>
             </View>

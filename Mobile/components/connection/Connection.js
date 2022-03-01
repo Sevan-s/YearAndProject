@@ -1,15 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 import AppLoading from 'expo-app-loading';
 import LoginButton from '../assets/LogInButton';
 import ConnectionInput from '../assets/ConnectionInput';
 import Footer from '../assets/footer';
-import Header from '../assets/Header';
 import GoogleConnexion from '../Oauth/Google';
 import React, { useState } from "react";
 
-function Connection({navigation}) {
+function Connection({ route, navigation }) {
+    /////////////////// SWITCH IF USER CONNECTED
+    const [connect, setConnected] = useState(0);
+    const {conn} = route.params
+    conn.then(data => setConnected(data))
+    if (connect === 1)
+        navigation.navigate('Global')
+    ////////////////////////////////////////////
 
     let [fontsLoaded] = useFonts({
         Prata_400Regular,
