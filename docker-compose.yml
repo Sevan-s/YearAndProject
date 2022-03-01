@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  server:
+    depends_on:
+      - rethinkdb 
+    build: Server/
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+  client_mobile:
+    build: Mobile/
+    volumes:
+      - common:/apk
+  client_web:
+    build: Web/
+    depends_on:
+      - server
+      - client_mobile
+    ports:
+      - "8081:8081"
+    networks:
+      - frontend
+    volumes:
+      - common:/apk
+  rethinkdb:
+    image: rethinkdb
+    command: rethinkdb --bind all
+    ports:
+      - "28015:28015"
+    networks:
+      - backend
+    volumes:
+      - ./Server/data:/app
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  common:

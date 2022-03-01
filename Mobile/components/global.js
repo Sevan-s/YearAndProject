@@ -1,0 +1,1 @@
+global.connected = false;
