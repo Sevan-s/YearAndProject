@@ -1,4 +1,5 @@
 import {Auth} from './Auth.js'
+import {Regist} from './Register.js'
 import '../css/App.css';
 import '../css/workspace.css';
 import {
@@ -8,15 +9,20 @@ import {
   Navigate
 } from "react-router-dom";
 import Navbar from "./NavBar"
-import React, { useState, useEffect, Suspense} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import Sett from "./settings.js"
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>} />
+        <Route path="/Register" element={<Register/>} />
         <Route path="/Home" element={<Home/>} />
+        <Route path="/settings" element={<Settings/>} />
+        <Route path="/user" element={<Home/>} />
         <Route path="/disconnect" element={<Disconnect/>} />
         <Route path="/about.json" element={<About/>} />
       </Routes>
@@ -42,6 +48,22 @@ function Login() {
       <Auth connect={getConnectVal()}/>
     </div>
   );
+}
+
+function Register() {
+  return (
+    <div className="Service">
+      <Regist connect={getConnectVal()}/>
+    </div>
+  );
+}
+
+function Settings() {
+  return (
+    <div>
+      <Sett></Sett>
+    </div>
+  )
 }
 
 //////////////////// DISCONNECT
@@ -70,6 +92,8 @@ function Disconnect() {
 //   console.log(wr)
 //   return (wr);
 // }
+
+
 
 function Home() {
 

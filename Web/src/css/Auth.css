@@ -1,16 +1,25 @@
-#title {
+.title {
   text-align: center;
-  font-size: 600%;
-  margin-block-start: 0.6em;
+  font-size: 400%;
+}
+
+#firstTitle {
+  margin-top: 3rem;
+}
+
+#lastTitle {
+  margin-bottom: 3rem;
+}
+
+#maindiv {
+  color: white;
 }
 
 .auth-container {
   position: absolute;
-  top: calc(50% - 200px);
-  left: calc(50% - 200px);
-  background-color: white;
-  width: 400px;
-  height: 400px;
+  top: calc(50% - 400px);
+  left: calc(50% - 350px);
+  background-color: black;
   margin: auto;
   border: 3px solid;
   border-radius: 25px;
@@ -18,14 +27,38 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 700px;
+}
+
+.switch {
+  position: absolute;
+  top: calc(90%);
+  left: calc(50% - 350px);
+  background-color: black;
+  margin: auto;
+  border: 3px solid;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  width: 700px;
+}
+
+.formField {
+  width: 400px;
+  margin: 2rem;
+  margin-top: 0.5rem;
+  border-radius: 10px;
 }
 
 .button-container {
-  width: 100%;
-  padding: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+}
+
+label {
+  margin-left: 2.5rem;
 }
 
 .blank {
@@ -35,7 +68,6 @@
 
 input[type=text], input[type=password] {
   padding: 12px 20px;
-  margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
@@ -44,12 +76,38 @@ input[type=text], input[type=password] {
 .login-button, .register-button, .google-button {
   background-color: black;
   color: white;
-  padding: 14px 20px;
+  padding: 7px 40px;
   margin: 8px 0;
-  border: none;
+  border: 2px solid;
+  border-radius: 10px;
   cursor: pointer;
+  font-size: 200%;
+}
+
+.google-button {
+  margin-bottom: 2rem;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+}
+
+hr {
+  border-top: 1px solid white;
+  width: 100%;
+  margin: 2rem;
 }
 
 .login-button:hover, .register-button:hover, .google-button:hover {
-  color: red;
+  background-color: white;
+  color: black; 
+}
+
+.link {
+  color: #f1f1f1;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 2px solid;
 }
