@@ -6,12 +6,11 @@ export default function Navbar() {
   return (
     <div>
       <nav>
-        <Link className="itemsTitle" to="/">OtakuBoard</Link>
+        <Link className="itemsTitle" to="/">Digital Widget Service</Link>
         <div className="list">
           <Link className="items" to="/home">Home</Link>
-          <Link className="items" to="/Service1">Youtube Service</Link>
-          <Link className="items" to="/Service2">Manga Service</Link>
-          <Link className="items" to="/Service3">Traduction Service</Link>
+          <Link className="items" to="/settings">Settings</Link>
+          <Link className="items" to="/user">User</Link>
         </div>
         <Link className="itemsSignOut" to="/disconnect">Sign out</Link>
       </nav>
