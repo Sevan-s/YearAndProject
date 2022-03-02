@@ -1,12 +1,21 @@
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import React from 'react';
+import axios from 'axios';
 
-function RegisterButton() { 
+function sendData(props) {
+    axios.post("http://localhost:8080/user/create/", {
+        "username": props.user,
+        "password": props.pass, "OAUTH": false,
+        "verifyPassword": props.verifyPassword
+    });
+}
+
+function RegisterButton(props) {
     return (
         <View>
             <Pressable 
                 style={styles.buttonAction}
-                onPress={() => alert('Simple Button pressed')}
+                onPress={() => sendData(props.user, props.pass, props.verifyPassword)}
             >
                 <Text style={styles.buttonTxt}>Register</Text>
             </Pressable>

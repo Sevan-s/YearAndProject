@@ -1,12 +1,20 @@
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import React from 'react';
+import axios from 'axios';
 
-function LoginButton() { 
+function sendData(props) {
+    axios.post("http://localhost:8080/user/connect/", {
+        "username": props.user,
+        "password": props.pass, "OAUTH": false
+    });
+}
+
+function LoginButton(props) { 
     return (
         <View>
             <Pressable 
                 style={styles.buttonAction}
-                onPress={() => alert('Simple Button pressed')}
+                onPress={() => sendData(props.user, props.pass)}
             >
                 <Text style={styles.buttonTxt}>Log in</Text>
             </Pressable>

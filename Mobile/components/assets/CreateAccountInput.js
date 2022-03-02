@@ -1,15 +1,18 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react'
 import RegisterButton from './RegisterButton';
 import GoogleConnexion from '../Oauth/Google';
 
 function CreateAccount() {
-
+    const [mail, setMail] = useState('')
+    const [password, setPassword] = useState('')
+    const [verifyPassword, setVerifyPassword] = useState('')
     return (
         <View style={styles.txtInput}>
             <Text style={styles.inputTitle}>Email</Text>
             <TextInput style={styles.inputTxt}
-                onChangeText={(text) => { this.setState({ mail: text }) }}
+                value={mail}
+                onChangeText={text => setMail(text)}
                 style={{
                     height: 34, backgroundColor: 'white',
                     width: 275,
@@ -22,7 +25,9 @@ function CreateAccount() {
             />
             <Text style={styles.inputTitle2}>Password</Text>
             <TextInput style={styles.inputTxt}
-                onChangeText={(text) => { this.setState({ password: text }) }}
+                secureTextEntry={true}
+                value={password}
+                onChangeText={text => setPassword(text)}
                 style={{
                     height: 34, backgroundColor: 'white',
                     width: 275,
@@ -35,7 +40,9 @@ function CreateAccount() {
             />
             <Text style={styles.inputTitle3}>Verify password</Text>
             <TextInput style={styles.inputTxt}
-                onChangeText={(text) => { this.setState({ verifyPassword: text }) }}
+                secureTextEntry={true}
+                value={verifyPassword}
+                onChangeText={text => setVerifyPassword(text)}
                 style={{
                     height: 34, backgroundColor: 'white',
                     width: 275,
@@ -46,7 +53,11 @@ function CreateAccount() {
                 placeholder="my_$ecr3t!/p4ssW0rd"
             />
             <View style={styles.button}>
-                <RegisterButton />
+                <RegisterButton 
+                user={mail}
+                pass={password}
+                verifyPassword={verifyPassword}
+                />
                 <Text style={styles.or}>or</Text>
                 <GoogleConnexion />
             </View>
