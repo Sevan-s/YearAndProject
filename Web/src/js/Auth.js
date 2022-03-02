@@ -1,16 +1,9 @@
 import React from 'react';
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import axios from 'axios'
 import {useState} from 'react'
 import '../css/Auth.css';
 import GoogleLogin from 'react-google-login';
-import ReactDOM from 'react-dom';
-
-
-function register(email, password) {
-  console.log("register -> To modify");
-  axios.post("http://localhost:8080/user/create/", {"username": email, "password": password, "OAUTH": false});
-}
 
 function signIn(email, password) {
   console.log("signIn -> To modify");
@@ -31,29 +24,39 @@ function Auth(props) {
     return (<Navigate replace to="/home" />);
   }
   return (
-    <div id="maindiv">
-      <p id="title">Otaku board</p>
-      <form action="" className="auth-container" method="get">
-        <label><b>Username</b></label>
-        <input id="uname" type="text" placeholder="Enter Username" name="uname" required />
+    <div>
+      <div id="maindiv" className="auth-container">
+        <b className='title' id='firstTitle'>Digital</b>
+        <b className='title'>Widget</b>
+        <b className='title' id='lastTitle'>Service</b>
+        <form action="" method="get">
+          <label><b>Email</b></label><br></br>
+          <input className='formField' id="uname" type="text" placeholder="my@email.here" name="uname" required /><br></br>
 
-        <label><b>Password</b></label>
-        <input id="psw" type="password" placeholder="Enter Password" name="psw" required />
-        <div className="button-container">
-          <button className="login-button" onClick={() => register(document.getElementById("uname").value, document.getElementById("psw").value)} type="submit">Register</button>
-          <div className="blank">
+          <label><b>Password</b></label><br></br>
+          <input className='formField' id="psw" type="password" placeholder="my_$ecr3t!/p4ssWOrd" name="psw" required />
+          <div className="button-container">
+            <button className="login-button" onClick={() => signIn(document.getElementById("uname").value, document.getElementById("psw").value)} type="submit">Log in</button>
+            <div className='separator'>
+              <br></br>
+              <hr></hr><b>or</b><hr></hr>
+              <br></br>
+            </div>
+            <GoogleLogin
+            clientId="748486023082-7d0a346g33366k9ftbp37n0u2jh70fcr.apps.googleusercontent.com"
+            render={renderProps => (
+              <button class="google-button" onClick={renderProps.onClick}>CONTINUE WITH GOOGLE</button>
+            )}
+            onSuccess={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+            />
           </div>
-          <button className="register-button" onClick={() => signIn(document.getElementById("uname").value, document.getElementById("psw").value)} type="submit">Sign In</button>
-        </div>
-        <GoogleLogin
-        clientId="748486023082-7d0a346g33366k9ftbp37n0u2jh70fcr.apps.googleusercontent.com"
-        render={renderProps => (
-          <button class="google-button" onClick={renderProps.onClick}>Login with Google</button>
-        )}
-        onSuccess={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-        />
-      </form>
+        </form>
+      </div>
+      <div className='switch'>
+        <b className='par'>Don't have an account?</b>
+        <Link className='link' to="/Register">Register now</Link>
+      </div>
     </div>
   );
 }
