@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable, ScrollView } from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 import AppLoading from 'expo-app-loading';
 import LoginButton from '../assets/LogInButton';
@@ -24,26 +24,23 @@ function Connection({ route, navigation }) {
     } else {
         return (
             <View style={styles.body}>
-                <View style={styles.bodyTop}>
-                    <View style={styles.connectionBody}>
-                        <View style={styles.Title}>
-                            <Text style={styles.text}>Digital</Text>
-                            <Text style={styles.text}>Widget</Text>
-                            <Text style={styles.text}>Services</Text>
-                            <ConnectionInput/>
+                <ScrollView>
+                    <View style={styles.bodyTop}>
+                        <View style={styles.connectionBody}>
+                            <View style={styles.Title}>
+                                <Text style={styles.text}>Digital</Text>
+                                <Text style={styles.text}>Widget</Text>
+                                <Text style={styles.text}>Services</Text>
+                                <ConnectionInput/>
+                            </View>
                         </View>
-                        <View style={styles.button}>
-                            <LoginButton />
-                            <Text style={styles.or}>or</Text>
-                            <GoogleConnexion />
+                        <View style={styles.createAccountRedirection}>
+                            <Text style={styles.CreateAccountTxt}>Don't have an account?</Text>
+                            <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Register')}>
+                            Register now</Text>
                         </View>
                     </View>
-                    <View style={styles.createAccountRedirection}>
-                        <Text style={styles.CreateAccountTxt}>Don't have an account?</Text>
-                        <Text style={styles.CreateAccountTxt} onPress={() => navigation.navigate('Register')}>
-                        Register now</Text>
-                    </View>
-                </View>
+                </ScrollView>
                 <Footer/>
             </View>
         );

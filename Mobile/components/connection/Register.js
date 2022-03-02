@@ -28,11 +28,7 @@ function Register({ route, navigation }) {
                         <Text style={styles.text}>Widget</Text>
                         <Text style={styles.text}>Services</Text>
                         <CreateAccount />
-                        <View style={styles.button}>
-                            <RegisterButton />
-                            <Text style={styles.or}>or</Text>
-                            <GoogleConnexion />
-                        </View>
+                        
                     </View>
                 </View>
                 <View style={styles.connect}>
