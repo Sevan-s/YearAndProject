@@ -77,7 +77,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
 async function test_A(uid) {
     console.log("TEST API");
     await sleep(1000);
@@ -96,7 +95,8 @@ async function test_A(uid) {
 
 /////////////////////////// LAUNCH API
 
-async function callFunc(uid, resolve) {
+async function requestApi(uid) {
+    console.log("start API");
     var pos = 0;
     if (!queue[uid])
         queue[uid] = [];
@@ -109,25 +109,13 @@ async function callFunc(uid, resolve) {
             pos += 1;
             if (queue[uid] && pos == queue[uid].length)
                 pos = 0;
+        } else {
+            await sleep(1000);
         }
     }
-    resolve() // TO END THE TIMEOUT 
-}
-
-function LaunchEachProcess(uid) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.log("LAUNCH API");
-            callFunc(uid, resolve);
-        }, 1000);
-    });
-}
-
-async function requestApi(uid) {
-    await LaunchEachProcess(uid);
-    console.log("Stop a User API.");
+    console.log("stop API")
 }
 
 //////////////////////////////////////
 
-module.exports = {requestApi, removeToQueue, addToQueue};
+module.exports = {requestApi, removeToQueue, addToQueue, stopApiProcess};

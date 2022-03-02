@@ -5,8 +5,6 @@ const DBCommunicate = require('./communicateDB')
 var cors = require('cors');
 const app = express()
 const port = 8080
-const fs = require('fs');
-const data = JSON.parse(fs.readFileSync('./data/user.json', 'utf8'))
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -35,7 +33,8 @@ app.post('/user/connect/', (req, res) => {
         isConnected = 1; // temporary
         accountID = data[0]['id'];
         console.log("Connect user.");
-        //CheckAction.requestApi(username);
+        CheckAction.requestApi(accountID);
+        console.log("AFTER")
       } else
         console.log("Can't connect user");
     })
@@ -53,7 +52,32 @@ app.post('/user/create/', (req, res) => {
       isConnected = 1 // temporary
       DBCommunicate.addUser(req.body.username, req.body.password, false, function(_, data) {
         accountID = data["generated_keys"][0];
-        //CheckAction.requestApi(req.body.username);
+        CheckAction.requestApi(accountID);
+      })
+    }
+  })
+});
+
+// username + password
+app.post('/user/oauth/', (req, res) => {
+  if (req.body.username != null && req.body.password !== '')
+  DBCommunicate.getUser(req.body.username, function(data) {
+    if (data.length != 0) {
+      if (data[0]['password'] == req.body.password &&
+      data[0]["OAUTH"] == req.body.OAUTH) {
+        isConnected = 1; // temporary
+        accountID = data[0]['id'];
+        console.log("Connect user.");
+        CheckAction.requestApi(accountID);
+        console.log("AFTER")
+      } else
+        console.log("Can't connect user")
+    } else {
+      console.log("User create.")
+      isConnected = 1 // temporary
+      DBCommunicate.addUser(req.body.username, req.body.password, true, function(_, data) {
+        accountID = data["generated_keys"][0];
+        CheckAction.requestApi(accountID);
       })
     }
   })
@@ -69,6 +93,7 @@ app.get('/user/connected/', (req, res) => {
 // Doit le modif
 app.post('/user/disconnect/', (req, res) => {
   isConnected = 0;
+  CheckAction.stopApiProcess(accountID)
   accountID = "";
   console.log("disconnect");
 });

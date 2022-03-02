@@ -1,6 +1,33 @@
 const r = require('rethinkdb');
 var connection = null
 
+function initDB() {
+    try {
+        r.dbCreate("users").run(connection, function(_, res) {
+            console.log(res)
+            try {
+                r.db("users").tableCreate('users').run(connection, function(_, res) {
+                    console.log(res)
+                })
+        
+            } catch (err) {
+                console.log("table find.")
+            }
+        })
+
+    } catch (err) {
+        console.log("DB find.")
+        try {
+            r.db("users").tableCreate('users').run(connection, function(_, res) {
+                console.log(res)
+            })
+    
+        } catch (err) {
+            console.log("table find.")
+        }
+    }
+}
+
 ////////////////// USER ACCOUNT
 
 function addUser(username, password, OAUTH, callback) {
@@ -42,13 +69,13 @@ function getUserByID(accountID, callback) {
 //////////////////////////////
 
 function connect() {
-    r.connect({host: '172.23.0.2', port: 28015}, function(err, conn) {
+    r.connect({host: '172.29.0.2', port: 28015}, function(err, conn) {
         if (err) {
             console.log(err);
             setTimeout(connect, 1000);
         } else {
             connection = conn;
-            //initDB()
+            initDB()
             console.log("CONNECT")
         }
     })
