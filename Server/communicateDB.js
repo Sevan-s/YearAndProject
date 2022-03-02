@@ -45,9 +45,13 @@ function addUser(username, password, OAUTH, callback) {
             token: ""
         }],
         action: [{
-            name: "Drink Water",
-            activate: true,
+            name: "new Mail",
+            activate: false,
             reaction: []
+        }, {
+            name: "test-A",
+            activate: false,
+            reaction: ["test-R"]
         }],
         OAUTH: OAUTH
     }).run(connection, callback);
