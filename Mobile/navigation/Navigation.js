@@ -20,7 +20,7 @@ const Tabs = () => {
         screenOptions={{
             headerShown: false,
             tabBarStyle: {
-                height: 90,
+                height: Platform.OS === 'ios' ? 100 : 60,
                 backgroundColor: 'black',
             },
           }}

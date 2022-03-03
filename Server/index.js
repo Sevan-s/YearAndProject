@@ -124,7 +124,8 @@ app.post('/user/switchAction/', (req, res) => {
           // a modif
           //CheckAction.addToQueue(req.body.name, req.body.username, req.body.reaction);
         }
-      })
+      });
+      DBCommunicate.replaceUserByID(accountID, data);
     })
   }
 });
@@ -137,13 +138,14 @@ app.post('/user/switchReaction/', (req, res) => {
       data['action'].forEach(element => {
         if (element.action == req.body.name) {
           if (element['reaction'].includes(req.body.reaction))
-            console.log("NEED TO REMOVE")
+            element['reaction'].splice(element['reaction'].indexOf(req.body.reaction), 1)
           else
-            console.log("NEED TO ADD")
+            element['reaction'].push(req.body.reaction)
           // a modif
           //CheckAction.addToQueue(req.body.name, req.body.username, req.body.reaction);
         }
-      })
+      });
+      DBCommunicate.replaceUserByID(accountID, data);
     })
   }
 });
@@ -162,17 +164,26 @@ app.get('/user/getAccountLink/', (req, res) => {
 
 // token + name
 // NEED TO MODIFY
+
+function changeAccountLinkDB(name, token) {
+  DBCommunicate.getUserByID(accountID, function(data) {
+    data['account_link'].forEach(element => {
+      if (element.name == name) {
+        element.token = token;
+        console.log("Token set.");
+      }
+    });
+    DBCommunicate.replaceUserByID(accountID, data);
+  })
+}
+
 app.post('/user/setAccountLink/', (req, res) => {
   console.log("stock: " + req.body.token)
   if (typeof req.body.token != 'undefined' && typeof req.body.name != 'undefined' ) {
-    DBCommunicate.getUserByID(accountID, function(data) {
-      data['account_link'].forEach(element => {
-        if (element.name == req.body.name) {
-          element.token = req.body.token;
-          console.log("Token set.");
-        }
-      })
-    })
+    if (accountID == '')
+      setTimeout(() => {changeAccountLinkDB(req.body.name, req.body.token)}, 1000)
+    else
+      changeAccountLinkDB(req.body.name, req.body.token)
   }
 });
 

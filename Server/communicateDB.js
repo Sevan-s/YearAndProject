@@ -37,11 +37,21 @@ function addUser(username, password, OAUTH, callback) {
         account_link: [{
             name: "Google",
             token: ""
+        },{
+            name: "Facebook",
+            token: ""
+        },{
+            name: "Microsoft",
+            token: ""
         }],
         action: [{
-            name: "Drink Water",
-            activate: true,
+            name: "new Mail",
+            activate: false,
             reaction: []
+        }, {
+            name: "test-A",
+            activate: false,
+            reaction: ["test-R"]
         }],
         OAUTH: OAUTH
     }).run(connection, callback);
@@ -57,7 +67,7 @@ function getUser(username, callback) {
 function getUserByID(accountID, callback) {
     r.db("users").table("users").get(accountID).run(connection, function(err, result) {
         if (err) throw err;
-        result.toArray().then(data => callback(data));
+        callback(result);
     });
 }
 
@@ -65,6 +75,14 @@ function getUserByID(accountID, callback) {
 //////////////////////////////
 
 ///////////////// USER CONTENT
+
+function replaceUserByID(accountID, data) {
+    r.db("users").table("users").get(accountID).replace(data, {returnChanges: true}).run(connection, function(err, result) {
+        if (err) throw err;
+        console.log(result)
+    });
+}
+
 
 //////////////////////////////
 
@@ -81,4 +99,4 @@ function connect() {
     })
 }
 
-module.exports = {connect, addUser, getUser, getUserByID}
+module.exports = {connect, addUser, getUser, getUserByID, replaceUserByID}
