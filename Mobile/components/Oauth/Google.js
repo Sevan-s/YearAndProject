@@ -2,6 +2,11 @@ import React from 'react';
 import { View, Button, StyleSheet, Pressable, Text } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 
+const responseGoogle = (result) => {
+  axios.post("http://localhost:8080/user/oauth/", {"username": result.user, "password": result.idToken, "OAUTH": true})
+  axios.post("http://localhost:8080/user/setAccountLink/", {"token": result.accessToken, "name": "Google"})
+  window.location.reload(false);
+}
 
 export default function GoogleConnexion () {
 
@@ -9,13 +14,15 @@ export default function GoogleConnexion () {
     try {
       const result = await Google.logInAsync({
         behavior: 'web',
-        iosClientId: "314509708961-3b7660nvfs63thn3iultd8riifae6p4s.apps.googleusercontent.com",
+        iosClientId: "748486023082-p47feo8sa31ljlknulfcd05b8ilb37lh.apps.googleusercontent.com",
         //androidClientId: AND_CLIENT_ID,
         scopes: ['profile', 'email'],
       });
 
       if (result.type === 'success') {
-        return result.accessToken;
+        responseGoogle(result);
+        result.accessToken
+        return (0);
       } else {
         return { cancelled: true };
       }
