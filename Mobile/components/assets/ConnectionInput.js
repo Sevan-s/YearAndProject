@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import LoginButton from './LogInButton';
 import GoogleConnexion from '../Oauth/Google';
 
-function ConnectionInput() {
+function ConnectionInput(props) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
     return (
@@ -40,6 +40,7 @@ function ConnectionInput() {
                 <LoginButton
                     user={mail}
                     pass={password}
+                    navigation={props.navigation}
                 />
                 <Text style={styles.or}>or</Text>
                 <GoogleConnexion />

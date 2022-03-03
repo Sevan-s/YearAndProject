@@ -31,7 +31,7 @@ function Connection({ route, navigation }) {
                                 <Text style={styles.text}>Digital</Text>
                                 <Text style={styles.text}>Widget</Text>
                                 <Text style={styles.text}>Services</Text>
-                                <ConnectionInput/>
+                                <ConnectionInput navigation={navigation}/>
                             </View>
                         </View>
                         <View style={styles.createAccountRedirection}>

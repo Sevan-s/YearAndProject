@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-ip = "192.168.1.14"
+ip = "10.15.189.199"
 
 async function getConnectVal() {
     var connect = 0

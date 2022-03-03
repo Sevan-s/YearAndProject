@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import RegisterButton from './RegisterButton';
 import GoogleConnexion from '../Oauth/Google';
 
-function CreateAccount() {
+function CreateAccount(props) {
     const [mail, setMail] = useState('')
     const [password, setPassword] = useState('')
     const [verifyPassword, setVerifyPassword] = useState('')
@@ -57,6 +57,7 @@ function CreateAccount() {
                 user={mail}
                 pass={password}
                 verifyPassword={verifyPassword}
+                navigation={props.navigation}
                 />
                 <Text style={styles.or}>or</Text>
                 <GoogleConnexion />

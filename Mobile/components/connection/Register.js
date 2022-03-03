@@ -27,7 +27,7 @@ function Register({ route, navigation }) {
                         <Text style={styles.text}>Digital</Text>
                         <Text style={styles.text}>Widget</Text>
                         <Text style={styles.text}>Services</Text>
-                        <CreateAccount />
+                        <CreateAccount navigation={navigation}/>
                         
                     </View>
                 </View>

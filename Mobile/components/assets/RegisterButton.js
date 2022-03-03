@@ -7,7 +7,16 @@ function RegisterButton(props) {
         <View>
             <Pressable 
                 style={styles.buttonAction}
-                onPress={() => servCom.createUser(props.user, props.pass)}
+                onPress={() => {
+                    servCom.createUser(props.user, props.pass)
+                    setTimeout(() => {
+                        props.navigation.navigate({
+                            name: 'Register',
+                            params: {conn: servCom.getConnectVal()},
+                            merge: true,
+                        });
+                    }, 1000)
+                }}
             >
                 <Text style={styles.buttonTxt}>Register</Text>
             </Pressable>
