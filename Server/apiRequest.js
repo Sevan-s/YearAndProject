@@ -47,7 +47,8 @@ async function updateMail(uid) {
             if (element.name == "Google")
                 GoogleToken = element.token
         });
-        var myInit = { method: 'POST',
+        console.log("GoogleToken")
+        /*var myInit = { method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GoogleToken}` },
         mode: 'cors',
         cache: 'default' };
@@ -57,7 +58,7 @@ async function updateMail(uid) {
         .then((data) => data.json())
         .then((result) => {
         console.log(result)
-        }).catch(console.error)
+        }).catch(console.error)*/
     })
     await sleep(1000)
 }

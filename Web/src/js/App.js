@@ -1,5 +1,5 @@
 import {Auth} from './Auth.js'
-import {Regist} from './Register.js'
+import RegisterPage from './Register.js'
 import '../css/App.css';
 import '../css/workspace.css';
 import {
@@ -11,8 +11,8 @@ import {
 import Navbar from "./NavBar"
 import React, { useState } from 'react';
 import axios from 'axios';
-import Sett from "./settings.js"
-
+import Oauth from "./Oauth/oauth.js"
+import HomeWidget from './Home.js';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path="/settings" element={<Settings/>} />
         <Route path="/user" element={<Home/>} />
         <Route path="/disconnect" element={<Disconnect/>} />
-        <Route path="/about.json" element={<About/>} />
+        <Route path="/about.json" element={<About about={getAbout()}/>} />
       </Routes>
     </BrowserRouter>
   );
@@ -53,7 +53,7 @@ function Login() {
 function Register() {
   return (
     <div className="Service">
-      <Regist connect={getConnectVal()}/>
+      <RegisterPage connect={getConnectVal()}/>
     </div>
   );
 }
@@ -61,17 +61,15 @@ function Register() {
 function Settings() {
   return (
     <div>
-      <Sett></Sett>
+      <Oauth></Oauth>
     </div>
   )
 }
 
 //////////////////// DISCONNECT
 
-var widget = [0, 0, 0, 0, 0, 0]
-
 function Disconnect() {
-  axios.post("http://localhost:8080/user/disconnect/", {"widget": widget});
+  axios.post("http://localhost:8080/user/disconnect/");
   return(
     <div className="Service">
       <Navigate replace to="/"/>;
@@ -81,36 +79,23 @@ function Disconnect() {
 
 //////////////////// HOME
 
-// async function getWidget() {
-//   var wr = 0
-//   await axios.get("http://localhost:8080/user/widget/")
-//   .then(res => {
-//     const data = res.data;
-//     wr = data.widget;
-//   })
-//   console.log("test")
-//   console.log(wr)
-//   return (wr);
-// }
-
-
+async function getAction() {
+  var wr = 0
+  await axios.get("http://localhost:8080/user/getAction/")
+  .then(res => {
+    const data = res.data;
+    wr = data.action;
+  })
+  console.log(wr)
+  return (wr);
+}
 
 function Home() {
-
   return (
     <div>
       <Navbar/>
       <br/>
-        <div className="serviceWrapper" id="widgetParent">
-          <div className="widget">
-            <div className="widgetHeader">
-              <h3>Add Widgets</h3>
-            </div>
-            <div className="widgetContent">
-              <br/>
-            </div>
-          </div>
-        </div>
+        <HomeWidget api={getAction()}/>
       <br/>
     </div>
   );
@@ -128,9 +113,9 @@ async function getAbout() {
   return (about);
 }
 
-function About() {
+function About(props) {
   const [about, setAbout] = useState(null);
-  getAbout().then(data => setAbout(data));
+  props.about.then(data => setAbout(data));
   return (
     <div>
       <pre>

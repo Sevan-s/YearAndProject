@@ -30,10 +30,10 @@ function Auth(props) {
         <b className='title'>Widget</b>
         <b className='title' id='lastTitle'>Service</b>
         <form action="" method="get">
-          <label><b>Email</b></label><br></br>
+          <label class='Authlabel'><b>Email</b></label><br></br>
           <input className='formField' id="uname" type="text" placeholder="my@email.here" name="uname" required /><br></br>
 
-          <label><b>Password</b></label><br></br>
+          <label class='Authlabel'><b>Password</b></label><br></br>
           <input className='formField' id="psw" type="password" placeholder="my_$ecr3t!/p4ssWOrd" name="psw" required />
           <div className="button-container">
             <button className="login-button" onClick={() => signIn(document.getElementById("uname").value, document.getElementById("psw").value)} type="submit">Log in</button>

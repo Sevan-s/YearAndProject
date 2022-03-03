@@ -103,16 +103,19 @@ app.post('/user/disconnect/', (req, res) => {
 /////////////// ACTION
 
 app.get('/user/getAction/', (req, res) => {
-  console.log("Action ->");
   DBCommunicate.getUserByID(accountID, function(data) {
-    console.log(data['action']);
-    res.json({"action": data['action']});
+    if (data != null) {
+      //console.log("Action ->");
+      //console.log(data['action']);
+      res.json({"action": data['action']});
+    } else
+      res.json({"action": []})
   })
 });
 
 // NEED TO MODIFY
 app.post('/user/switchAction/', (req, res) => {
-  if (typeof req.body.token != 'undefined' && typeof req.body.name != 'undefined' ) {
+  if (typeof req.body.name != 'undefined' ) {
     DBCommunicate.getUserByID(accountID, function(data) {
       data['action'].forEach(element => {
         if (element.name == req.body.name) {

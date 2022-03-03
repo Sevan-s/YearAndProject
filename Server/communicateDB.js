@@ -47,11 +47,13 @@ function addUser(username, password, OAUTH, callback) {
         action: [{
             name: "new Mail",
             activate: false,
-            reaction: []
+            reaction: [],
+            desc: "New mail receive"
         }, {
             name: "test-A",
             activate: false,
-            reaction: ["test-R"]
+            reaction: ["test-R"],
+            desc: "Juste un teste afin de savoir tout ce qu'il se passe"
         }],
         OAUTH: OAUTH
     }).run(connection, callback);
@@ -71,7 +73,6 @@ function getUserByID(accountID, callback) {
     });
 }
 
-
 //////////////////////////////
 
 ///////////////// USER CONTENT
@@ -79,15 +80,14 @@ function getUserByID(accountID, callback) {
 function replaceUserByID(accountID, data) {
     r.db("users").table("users").get(accountID).replace(data, {returnChanges: true}).run(connection, function(err, result) {
         if (err) throw err;
-        console.log(result)
+        //console.log(result)
     });
 }
-
 
 //////////////////////////////
 
 function connect() {
-    r.connect({host: '172.29.0.2', port: 28015}, function(err, conn) {
+    r.connect({host: '172.19.0.2', port: 28015}, function(err, conn) {
         if (err) {
             console.log(err);
             setTimeout(connect, 1000);
