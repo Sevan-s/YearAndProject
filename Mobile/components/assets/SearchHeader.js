@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     txtInput: {
         marginTop: 50,
     },
-
   
     inputTxt: {
         marginRight: 10,

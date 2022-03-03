@@ -12,7 +12,7 @@ function Connection({ route, navigation }) {
     const [connect, setConnected] = useState(0);
     const {conn} = route.params
     conn.then(data => setConnected(data))
-    if (connect === 0)
+    if (connect === 1)
         navigation.navigate('Global')
     ////////////////////////////////////////////
 
