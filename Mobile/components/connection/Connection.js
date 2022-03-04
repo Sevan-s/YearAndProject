@@ -1,10 +1,8 @@
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 import AppLoading from 'expo-app-loading';
-import LoginButton from '../assets/LogInButton';
 import ConnectionInput from '../assets/ConnectionInput';
 import Footer from '../assets/footer';
-import GoogleConnexion from '../Oauth/Google';
 import React, { useState } from "react";
 
 function Connection({ route, navigation }) {

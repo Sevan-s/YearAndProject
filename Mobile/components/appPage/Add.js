@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView,Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import Header from '../assets/Header';
 import Card from '../assets/Card';
 

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { View, Switch, StyleSheet, Text } from "react-native";
+const servCom = require('./../../communicateServer');
 
-const SwitchButton = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+const SwitchButton = (props) => {
+  const [isEnabled, setIsEnabled] = useState(props.activate);
+  const toggleSwitch = () => {setIsEnabled(previousState => !previousState); servCom.switchAction(props.name)};
 
   return (
     <View style={styles.container}>

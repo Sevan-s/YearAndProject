@@ -1,9 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable, Switch, useState} from 'react-native';
-import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import AppLoading from 'expo-app-loading';
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import SwitchButton from './Switch';
 
 export default function Card(props) {
@@ -11,10 +7,10 @@ export default function Card(props) {
     return (
         <View style={styles.body}>
             <View style={styles.card}>
-                <Text style={styles.cardTitle}>{props.Title}</Text>
-                <Text style={styles.cardTxt}>{props.Txt}</Text>
+                <Text style={styles.cardTitle}>{props.item.name}</Text>
+                <Text style={styles.cardTxt}>{props.item.desc}</Text>
                 <View style={styles.switchStatus}>
-                    <SwitchButton/>
+                    <SwitchButton state={props.item.activate} name={props.item.name}/>
                 </View>
             </View>
         </View>
@@ -40,6 +36,7 @@ const styles = StyleSheet.create({
         marginLeft: 40,
         backgroundColor: 'black',
         borderRadius: 10,
+        width:'80%'
     },
     cardTitle: {
         marginTop: 20,

@@ -1,5 +1,5 @@
 import react from "react";
-import {Text, View, ScrollView, StyleSheet, StatusBar, Platform} from "react-native";
+import {Text, View, StyleSheet, Platform} from "react-native";
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 
 export default function Header () {

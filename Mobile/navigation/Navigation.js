@@ -1,15 +1,10 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import { Image } from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons';  
+import React from 'react'; 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons'; 
 import Homepage from '../components/appPage/HomePage';
 import ADD from '../components/appPage/Add';
-import Search from '../components/appPage/Search';
-import Profile from '../components/appPage/Profile';
 import Settings from '../components/appPage/Settings';
+const servCom = require('./../communicateServer');
 
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +26,7 @@ const Tabs = () => {
             inactiveBackgroundColor: 'black',
          }}
         >
-            <Tab.Screen name="Home" component={Homepage}
+            <Tab.Screen name="Home" children={() => <Homepage api={servCom.getAction()}/>}
              options={{
                 tabBarLabel: 'Home',
                 tabBarIcon: ({ color, size }) => (
@@ -39,17 +34,9 @@ const Tabs = () => {
                 ),
               }}
             />
-            <Tab.Screen name="Search" component={Search}
-            options={{
-                tabBarLabel: 'Search',
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="search" color={color} size={25} />
-                ),
-              }}
-            />
             <Tab.Screen name="ADD" component={ADD}
             options={{
-                tabBarLabel: 'ADD',
+                tabBarLabel: 'Config',
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="add-circle-outline" size={25} color={color} />
                 ),
@@ -60,14 +47,6 @@ const Tabs = () => {
                 tabBarLabel: 'Settings',
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="settings" color={color} size={25} />
-                ),
-              }}
-            />
-            <Tab.Screen name="Profile" component={Profile}
-            options={{
-                tabBarLabel: 'Profile',
-                tabBarIcon: ({ color, size }) => (
-                    <AntDesign name="user" size={25} color={color} />
                 ),
               }}
             />

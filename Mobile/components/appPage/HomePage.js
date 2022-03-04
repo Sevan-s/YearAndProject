@@ -1,18 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable, ScrollView, useState } from 'react-native';
+import { StyleSheet, View, ScrollView} from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
-import React from 'react';
+import React, {useState} from 'react';
 import AppLoading from 'expo-app-loading';
-import Footer from '../assets/footer';
 import Header from '../assets/Header';
 import Card from '../assets/Card';
 
+var apiSave = []
 
-export default function Homepage() {
-
+export default function Homepage(props) {
+    const [api, setApi] = useState(apiSave);
+    props.api.then(data => {setApi(data); apiSave = data});
     let [fontsLoaded] = useFonts({
         Prata_400Regular,
     });
+
 
     if (!fontsLoaded) {
         return <AppLoading />;
@@ -21,26 +22,11 @@ export default function Homepage() {
             <View style={styles.body}>
                 <Header />
                 <ScrollView>
-                    <Card Title="Title of the A/R"
-                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
-                        Status="Status"
-                        style={styles.card} />
-                    <Card Title="Title of the A/R"
-                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
-                        Status="Status"
-                        style={styles.card} />
-                    <Card Title="Title of the A/R"
-                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
-                        Status="Status"
-                        style={styles.card} />
-                    <Card Title="Title of the A/R"
-                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
-                        Status="Status"
-                        style={styles.card} />
-                    <Card Title="Title of the A/R"
-                        Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description"
-                        Status="Status"
-                        style={styles.card} />
+                    {api?.map(item => {
+                        return (
+                            <Card key={item.name} item={item}/>
+                        )
+                    })}
                 </ScrollView>
             </View>
         );

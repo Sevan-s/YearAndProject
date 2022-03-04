@@ -1,10 +1,8 @@
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 import React, { useState } from 'react';
 import CreateAccount from '../assets/CreateAccountInput';
-import RegisterButton from '../assets/RegisterButton';
 import Footer from '../assets/footer';
-import GoogleConnexion from '../Oauth/Google';
 
 function Register({ route, navigation }) {
     /////////////////// SWITCH IF USER CONNECTED

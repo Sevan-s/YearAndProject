@@ -1,5 +1,5 @@
 import react from "react";
-import {Text, View, ScrollView, StyleSheet} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
 
 export default function Footer () {
     return (

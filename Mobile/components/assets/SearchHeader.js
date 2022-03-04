@@ -1,5 +1,5 @@
 import react from "react";
-import {Text, View, ScrollView, StyleSheet, StatusBar, Platform, TextInput} from "react-native";
+import {View, StyleSheet, Platform, TextInput} from "react-native";
 import { useFonts, Prata_400Regular } from '@expo-google-fonts/prata';
 
 export default function SearchHeader () {
