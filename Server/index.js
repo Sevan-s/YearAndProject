@@ -60,27 +60,30 @@ app.post('/user/create/', (req, res) => {
 
 // username + password
 app.post('/user/oauth/', (req, res) => {
-  if (req.body.username != null && req.body.password !== '')
-  DBCommunicate.getUser(req.body.username, function(data) {
-    if (data.length != 0) {
-      if (data[0]['password'] == req.body.password &&
-      data[0]["OAUTH"] == req.body.OAUTH) {
-        isConnected = 1; // temporary
-        accountID = data[0]['id'];
-        console.log("Connect user.");
-        CheckAction.requestApi(accountID);
-        console.log("AFTER")
-      } else
-        console.log("Can't connect user")
-    } else {
-      console.log("User create.")
-      isConnected = 1 // temporary
-      DBCommunicate.addUser(req.body.username, req.body.password, true, function(_, data) {
-        accountID = data["generated_keys"][0];
-        CheckAction.requestApi(accountID);
-      })
-    }
-  })
+  console.log("oauth:" + req.body.username + ' - ' + req.body.password)
+  if (req.body.username != null && req.body.password !== '') {
+    console.log("call DB");
+    DBCommunicate.getUser(req.body.username, function(data) {
+      if (data.length != 0) {
+        if (data[0]['password'] == req.body.password &&
+        data[0]["OAUTH"] == req.body.OAUTH) {
+          isConnected = 1; // temporary
+          accountID = data[0]['id'];
+          console.log("Connect user.");
+          CheckAction.requestApi(accountID);
+          console.log("AFTER")
+        } else
+          console.log("Can't connect user")
+      } else {
+        console.log("User create.")
+        isConnected = 1 // temporary
+        DBCommunicate.addUser(req.body.username, req.body.password, true, function(_, data) {
+          accountID = data["generated_keys"][0];
+          CheckAction.requestApi(accountID);
+        })
+      }
+    })
+  }
 });
 
 // Doit le modif
@@ -167,22 +170,26 @@ app.get('/user/getAccountLink/', (req, res) => {
 
 function changeAccountLinkDB(name, token) {
   DBCommunicate.getUserByID(accountID, function(data) {
-    data['account_link'].forEach(element => {
-      if (element.name == name) {
-        element.token = token;
-        console.log("Token set.");
-      }
-    });
-    DBCommunicate.replaceUserByID(accountID, data);
+    if (data == null) {
+      console.log("User not connected, can't add token")
+    } else {
+      data['account_link'].forEach(element => {
+        if (element.name == name) {
+          element.token = token;
+          console.log("Token set.");
+        }
+      });
+      DBCommunicate.replaceUserByID(accountID, data);
+    }
   })
 }
 
 app.post('/user/setAccountLink/', (req, res) => {
   console.log("stock: " + req.body.token)
   if (typeof req.body.token != 'undefined' && typeof req.body.name != 'undefined' ) {
-    if (accountID == '')
+    if (accountID == '') {
       setTimeout(() => {changeAccountLinkDB(req.body.name, req.body.token)}, 1000)
-    else
+    } else
       changeAccountLinkDB(req.body.name, req.body.token)
   }
 });

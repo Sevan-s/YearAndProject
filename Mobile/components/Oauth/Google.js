@@ -15,7 +15,7 @@ export default function GoogleConnexion () {
       const result = await Google.logInAsync({
         behavior: 'web',
         iosClientId: "748486023082-p47feo8sa31ljlknulfcd05b8ilb37lh.apps.googleusercontent.com",
-        //androidClientId: AND_CLIENT_ID,
+        androidClientId: "748486023082-eg5hdh1vqor9konl4doskhr902nfjj6v.apps.googleusercontent.com",
         scopes: ['profile', 'email'],
       });
 
