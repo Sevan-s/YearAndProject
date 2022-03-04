@@ -48,11 +48,13 @@ function addUser(username, password, OAUTH, callback) {
             name: "new Mail",
             activate: false,
             reaction: [],
+            reaction_allow: ["test-R"],
             desc: "New mail receive"
         }, {
             name: "test-A",
             activate: false,
             reaction: ["test-R"],
+            reaction_allow: ["test-R"],
             desc: "Juste un teste afin de savoir tout ce qu'il se passe"
         }],
         OAUTH: OAUTH

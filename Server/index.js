@@ -124,8 +124,6 @@ app.post('/user/switchAction/', (req, res) => {
           else
             element.activate = true;
           console.log("Action switch.");
-          // a modif
-          //CheckAction.addToQueue(req.body.name, req.body.username, req.body.reaction);
         }
       });
       DBCommunicate.replaceUserByID(accountID, data);
@@ -139,13 +137,12 @@ app.post('/user/switchReaction/', (req, res) => {
   if (typeof req.body.reaction != 'undefined' && typeof req.body.action != 'undefined') {
     DBCommunicate.getUserByID(accountID, function(data) {
       data['action'].forEach(element => {
-        if (element.action == req.body.name) {
+        if (element.name == req.body.action) {
           if (element['reaction'].includes(req.body.reaction))
             element['reaction'].splice(element['reaction'].indexOf(req.body.reaction), 1)
           else
             element['reaction'].push(req.body.reaction)
-          // a modif
-          //CheckAction.addToQueue(req.body.name, req.body.username, req.body.reaction);
+          console.log("Reaction switch")
         }
       });
       DBCommunicate.replaceUserByID(accountID, data);

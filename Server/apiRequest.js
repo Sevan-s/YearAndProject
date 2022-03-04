@@ -73,28 +73,6 @@ async function test_A(uid) {
 
 /////////////////////////// LAUNCH API
 
-/*
-function getNextAPIAvailable(uid, pos) {
-    if (pos == -1)
-        pos = 0
-    var res = -1
-    var apiName = ""
-    console.log("Start search")
-    DBCommunicate.getUserByID(uid, function(data) {
-        const lim = data["action"].length
-        while (pos != lim) {
-            console.log(data["action"][pos])
-            if (data["action"][pos]["activate"] == true) {
-                res = pos
-                apiName = data["action"][pos]["name"]
-                return
-            }
-            pos += 1
-        }
-    })
-    return {"pos": res, "apiName": apiName}
-}*/
-
 async function requestApi(uid) {
     console.log("start API");
     var pos = 0;

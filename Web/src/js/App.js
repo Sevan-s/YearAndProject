@@ -13,6 +13,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Oauth from "./Oauth/oauth.js"
 import HomeWidget from './Home.js';
+import ConfigWidget from './Config.js';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Login/>} />
         <Route path="/Register" element={<Register/>} />
         <Route path="/Home" element={<Home/>} />
+        <Route path="/Config" element={<Config/>} />
         <Route path="/settings" element={<Settings/>} />
         <Route path="/user" element={<Home/>} />
         <Route path="/disconnect" element={<Disconnect/>} />
@@ -90,6 +92,17 @@ async function getAction() {
   return (wr);
 }
 
+function Config() {
+  return (
+    <div>
+      <Navbar/>
+      <br/>
+        <ConfigWidget api={getAction()}/>
+      <br/>
+    </div>
+  );
+}
+
 function Home() {
   return (
     <div>
@@ -100,6 +113,7 @@ function Home() {
     </div>
   );
 }
+
 
 //////////////////// ABOUT
 
