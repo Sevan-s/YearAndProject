@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import { View, Switch, StyleSheet, Text } from "react-native";
 const servCom = require('./../../communicateServer');
 
-const SwitchButton = (props) => {
+const SwitchReaction = (props) => {
   const [isEnabled, setIsEnabled] = useState(props.state);
-  const toggleSwitch = () => {setIsEnabled(previousState => !previousState); servCom.switchAction(props.name)};
+  const toggleSwitch = () => {setIsEnabled(previousState => !previousState); servCom.switchReaction(props.action, props.reaction)};
 
   return (
     <View style={styles.container}>
-      <Text style={styles.cardStatus}>{isEnabled ? "Activated" : "Desactivated"}</Text>
-      <Switch
-        trackColor={{ false: "#FF0000", true: "green" }}
-        thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
-      />
+        <Switch
+            trackColor={{ false: "#FF0000", true: "green" }}
+            thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+        />
     </View>
   );
 }
@@ -34,4 +33,4 @@ const styles = StyleSheet.create({
 },
 });
 
-export default SwitchButton;
+export default SwitchReaction;

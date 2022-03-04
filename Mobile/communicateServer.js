@@ -47,6 +47,10 @@ function connect(user, pass) {
     axios.post(`http://${ip}:8080/user/connect/`, {"username": user, "password": pass, "OAUTH": false});
 }
 
+function disconnect() {
+  axios.post(`http://${ip}:8080/user/disconnect/`);
+}
+
 ////////////////////////
 
-module.exports = {getConnectVal, connect, createUser, getAction, switchAction, switchReaction}
+module.exports = {getConnectVal, connect, createUser, getAction, switchAction, switchReaction, disconnect}

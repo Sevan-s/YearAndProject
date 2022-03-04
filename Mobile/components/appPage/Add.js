@@ -1,33 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 import Header from '../assets/Header';
-import Card from '../assets/Card';
+import ReactionCard from '../assets/ReactionCard';
 
-export default function ADD () {
+var apiSave = []
+
+export default function ADD (props) {
+    const [api, setApi] = useState(apiSave);
+    props.api.then(data => {setApi(data); apiSave = data});
+
     return (
         <View style={styles.body}>
             <Header/>
             <ScrollView>
-                <Card Title="Title of the A/R" 
-                    Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                    Status="Status"
-                    style={styles.card}/>
-                <Card Title="Title of the A/R" 
-                    Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                    Status="Status"
-                    style={styles.card}/>
-                <Card Title="Title of the A/R" 
-                    Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                    Status="Status"
-                    style={styles.card}/>
-                <Card Title="Title of the A/R" 
-                    Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                    Status="Status"
-                    style={styles.card}/>
-                <Card Title="Title of the A/R" 
-                    Txt="Brief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief descriptionBrief description" 
-                    Status="Status"
-                    style={styles.card}/>
+                {api?.map(item => {
+                    return (
+                        <ReactionCard key={item.name} item={item}/>
+                    )
+                })}
             </ScrollView>
         </View>
     );

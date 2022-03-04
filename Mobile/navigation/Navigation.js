@@ -32,14 +32,16 @@ const Tabs = () => {
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="home" color={color} size={25} />
                 ),
+                unmountOnBlur: true
               }}
             />
-            <Tab.Screen name="ADD" component={ADD}
+            <Tab.Screen name="ADD" children={() => <ADD api={servCom.getAction()}/>}
             options={{
                 tabBarLabel: 'Config',
                 tabBarIcon: ({ color, size }) => (
                     <Ionicons name="add-circle-outline" size={25} color={color} />
                 ),
+                unmountOnBlur: true
               }}
             />
             <Tab.Screen name="Settings" component={Settings}
@@ -48,6 +50,7 @@ const Tabs = () => {
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="settings" color={color} size={25} />
                 ),
+                unmountOnBlur: true
               }}
             />
         </Tab.Navigator>

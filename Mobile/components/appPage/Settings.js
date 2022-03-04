@@ -1,13 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from '../assets/Header';
+import DisconnectButton from '../assets/disconnect';
 
-export default function Settings () {
+export default function Settings({ navigation }) {
     return (
         <View>
             <Header/>
             <View style={styles.p}>
-                <Text>Settings</Text>
+                <DisconnectButton navigation={navigation}/>
             </View>
         </View>
     );
@@ -15,8 +16,6 @@ export default function Settings () {
 
 const styles = StyleSheet.create({
     p: {
-        alignItems: 'center',
-        justifyContent:'center',
-        height: '90%'
+        height: '90%',
     }
   });

@@ -7,9 +7,9 @@ import Footer from '../assets/footer';
 function Register({ route, navigation }) {
     /////////////////// SWITCH IF USER CONNECTED
     const [connect, setConnected] = useState(0);
-    const {conn} = route.params
+    const {conn, isdeco} = route.params
     conn.then(data => setConnected(data))
-    if (connect === 1)
+    if (!isdeco && connect === 1)
         navigation.navigate('Global')
     ////////////////////////////////////////////
 

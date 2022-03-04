@@ -12,7 +12,7 @@ function LoginButton(props) {
                     setTimeout(() => {
                         props.navigation.navigate({
                             name: 'Connection',
-                            params: {conn: servCom.getConnectVal()},
+                            params: {conn: servCom.getConnectVal(), isdeco: false},
                             merge: true,
                         });
                     }, 1000)

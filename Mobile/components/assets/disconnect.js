@@ -1,24 +1,24 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native';
 import React from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 const servCom = require('./../../communicateServer');
 
-function RegisterButton(props) {
+export default function DisconnectButton(props) {
     return (
         <View>
             <Pressable 
                 style={styles.buttonAction}
                 onPress={() => {
-                    servCom.createUser(props.user, props.pass)
+                    servCom.disconnect()
                     setTimeout(() => {
                         props.navigation.navigate({
-                            name: 'Register',
-                            params: {conn: servCom.getConnectVal(), isdeco: false},
+                            name: 'Connection',
+                            params: {conn: servCom.getConnectVal(), isdeco: true},
                             merge: true,
                         });
                     }, 1000)
                 }}
             >
-                <Text style={styles.buttonTxt}>Register</Text>
+                <Text style={styles.buttonTxt}>Log out</Text>
             </Pressable>
         </View>
     );
@@ -26,13 +26,15 @@ function RegisterButton(props) {
 
 const styles = StyleSheet.create({
     buttonAction: {
+        alignItems: 'center',
         borderColor: 'white',
         borderWidth: 1,
         borderRadius: 12,
-        paddingLeft: 30,
-        paddingRight: 30,
+        marginLeft: 10,
+        marginRight: 10,
         paddingTop: 2,
         paddingBottom: 3,
+        backgroundColor: 'black',
     },
   
     buttonTxt: {
@@ -41,5 +43,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     }
 });
-
-export default RegisterButton;
