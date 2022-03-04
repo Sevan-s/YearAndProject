@@ -1,20 +1,15 @@
 .widget {
   width: 400px;
-  height: 400px;
+  height: 200px;
   border: 3px solid;
   border-radius: 25px;
-  background: white;
+  background: black;
+  color: white;
+  padding: 15px;
 }
 
-.widgetHeader {
-  height: auto;
-  width: auto;
-  background: red;
-  border-top-left-radius: 22px; 
-  border-top-right-radius: 22px;
-  padding: .5rem;
-  border-bottom: 3px solid;
-  height: 25px;
+h3 {
+  margin: 0px;
 }
 
 .serviceWrapper {
@@ -23,14 +18,6 @@
   align-items: center;
   flex-wrap: wrap;
   row-gap: 50px;
-}
-
-.widgetContent {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 .button {
@@ -60,18 +47,9 @@ color: red;
   border: 3px solid;
   border-radius: 15px;
 }
-  
+
 .littleButton:hover {
 color: red;
-}
-
-.widgetHeader img {
-  float: right;
-  margin-right: 10px;
-}
-
-.widgetHeader h3 {
-  float: left;
 }
 
 .scrollable {

@@ -36,7 +36,7 @@ function SearchInput() {
 
 const styles = StyleSheet.create({
     header: {
-        height: Platform.OS === 'ios' ? 100 : 50,
+        height: Platform.OS === 'ios' ? 100 : 80,
         backgroundColor: 'black',
         justifyContent:'center',
         alignItems: 'center',
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     txtInput: {
         marginTop: 50,
     },
-
   
     inputTxt: {
         marginRight: 10,

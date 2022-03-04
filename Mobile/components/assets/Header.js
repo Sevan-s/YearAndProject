@@ -21,7 +21,7 @@ export default function Header () {
 
 const styles = StyleSheet.create({
     header: {
-        height: Platform.OS === 'ios' ? 100 : 50,
+        height: Platform.OS === 'ios' ? 100 : 80,
         backgroundColor: 'black',
         justifyContent:'center',
         alignItems: 'center',

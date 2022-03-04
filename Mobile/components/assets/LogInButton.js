@@ -1,12 +1,22 @@
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Pressable } from 'react-native';
 import React from 'react';
+const servCom = require('./../../communicateServer');
 
-function LoginButton() { 
+function LoginButton(props) { 
     return (
         <View>
             <Pressable 
                 style={styles.buttonAction}
-                onPress={() => alert('Simple Button pressed')}
+                onPress={() => {
+                    servCom.connect(props.user, props.pass);
+                    setTimeout(() => {
+                        props.navigation.navigate({
+                            name: 'Connection',
+                            params: {conn: servCom.getConnectVal()},
+                            merge: true,
+                        });
+                    }, 1000)
+                }}
             >
                 <Text style={styles.buttonTxt}>Log in</Text>
             </Pressable>

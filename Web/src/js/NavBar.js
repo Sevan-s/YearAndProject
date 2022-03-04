@@ -9,6 +9,7 @@ export default function Navbar() {
         <Link className="itemsTitle" to="/">Digital Widget Service</Link>
         <div className="list">
           <Link className="items" to="/home">Home</Link>
+          <Link className="items" to="/config">Config</Link>
           <Link className="items" to="/settings">Settings</Link>
           <Link className="items" to="/user">User</Link>
         </div>
