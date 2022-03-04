@@ -11,7 +11,8 @@ function signIn(email, password) {
 }
 
 const responseGoogle = (response) => {
-  axios.post("http://localhost:8080/user/oauth/", {"username": response["profileObj"]["username"], "password": response["profileObj"]["googleId"], "OAUTH": true})
+  console.log(response)
+  axios.post("http://localhost:8080/user/oauth/", {"username": response["profileObj"]["name"], "password": response["profileObj"]["googleId"], "OAUTH": true})
   axios.post("http://localhost:8080/user/setAccountLink/", {"token": response["accessToken"], "name": "Google"})
   window.location.reload(false);
 }
