@@ -49,13 +49,29 @@ function addUser(username, password, OAUTH, callback) {
             activate: false,
             reaction: [],
             reaction_allow: ["test-R"],
-            desc: "New mail receive"
+            desc: "New mail receive",
+            last_res: {}
         }, {
             name: "test-A",
             activate: false,
             reaction: ["test-R"],
             reaction_allow: ["test-R"],
-            desc: "Juste un teste afin de savoir tout ce qu'il se passe"
+            desc: "Juste un teste afin de savoir tout ce qu'il se passe",
+            last_res: {}
+        }, {
+            name: "Horoscope",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["test-R"],
+            desc: "Pour obtenir l'horoscope d'aujourd'hui des Capricornes",
+            last_res: {}
+        }, {
+            name: "Meteo",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["test-R"],
+            desc: "Pour obtenir la météo de Toulouse!",
+            last_res: {}
         }],
         OAUTH: OAUTH
     }).run(connection, callback);

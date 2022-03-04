@@ -5,13 +5,13 @@ import { Button } from 'react-native';
 
 WebBrowser.maybeCompleteAuthSession();
 
-export default function App() {
+export default function MicrosoftLogin() {
   // Endpoint
   const discovery = useAutoDiscovery('https://login.microsoftonline.com/<TENANT_ID>/v2.0');
   // Request
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: 'CLIENT_ID',
+      clientId: 'e8b5f8ec-f285-4714-b9a5-e3ab65c5d34d',
       scopes: ['openid', 'profile', 'email', 'offline_access'],
       redirectUri: makeRedirectUri({
         scheme: 'your.app'

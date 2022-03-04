@@ -1,8 +1,9 @@
 const DBCommunicate = require('./communicateDB')
+var axios = require("axios").default;
 
 //////////////////////////////// QUEUE
 
-const APIRequestList = {"test-A": test_A, "new Mail": updateMail}
+const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo}
 
 const reactionList = {"test-R": test_R}
 
@@ -16,16 +17,16 @@ function stopApiProcess(uid) {
 
 //////////////////////// CALL REACTION 
 
-function test_R() {
-    console.log("TEST REACTION")
+function test_R(params) {
+    console.log(params)
 }
 
-function callReaction(name, uid) {
+function callReaction(name, uid, params) {
     DBCommunicate.getUserByID(uid, function(data) {
         data['action'].forEach(element => {
             if (element.name == name) {
                 element["reaction"].forEach(reaction => {
-                    reactionList[reaction]();
+                    reactionList[reaction](params);
                 })
             }
         });
@@ -40,7 +41,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function updateMail(uid) {
+function updateMail(uid, data, pos) {
     DBCommunicate.getUserByID(uid, function(data) {
         GoogleToken = ""
         data["account_link"].forEach(element => {
@@ -60,13 +61,60 @@ async function updateMail(uid) {
         console.log(result)
         }).catch(console.error)*/
     })
-    await sleep(1000)
 }
 
-async function test_A(uid) {
+function meteo(uid, data, pos) {
+    const date = new Date();
+    if (data["action"][pos]["last_res"] == {} || data["action"][pos]["last_res"]['date'] != date.getDate()) {
+    
+        var axios = require("axios").default;
+
+        var options = {
+        method: 'GET',
+        url: 'https://community-open-weather-map.p.rapidapi.com/forecast',
+        params: {q: 'toulouse,fr', lang: 'fr'},
+        headers: {
+            'x-rapidapi-host': 'community-open-weather-map.p.rapidapi.com',
+            'x-rapidapi-key': '7bcf4947femshfb0ea70e3cceafdp170df7jsncd0f411563e1'
+        }
+        };
+
+        axios.request(options).then(function (response) {
+            callReaction("Meteo", uid, response.data);
+            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            DBCommunicate.replaceUserByID(uid, data);
+        }).catch(function (error) {
+            console.error("ERROR: WEATHER");
+        });
+    }
+}
+
+function horoscope(uid, data, pos) {
+    const date = new Date();
+    if (data["action"][pos]["last_res"] == {} || data["action"][pos]["last_res"]['date'] != date.getDate()) {
+        var options = {
+            method: 'POST',
+            url: 'https://sameer-kumar-aztro-v1.p.rapidapi.com/',
+            params: {sign: 'capricorn', day: 'today'},
+            headers: {
+                'x-rapidapi-host': 'sameer-kumar-aztro-v1.p.rapidapi.com',
+                'x-rapidapi-key': '7bcf4947femshfb0ea70e3cceafdp170df7jsncd0f411563e1'
+            }
+        };
+
+        axios.request(options).then(function (response) {
+            callReaction("Horoscope", uid, response.data);
+            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            DBCommunicate.replaceUserByID(uid, data);
+        }).catch(function (_) {
+            console.error("ERROR: HOROSCOPE");
+        });
+    }
+}
+
+function test_A(uid, _, _) {
     console.log("TEST API");
-    await sleep(1000);
-    callReaction("test-A", uid);
+    callReaction("test-A", uid, "Response!");
 }
 
 //////////////////////////////////////
@@ -86,12 +134,12 @@ async function requestApi(uid) {
             while (pos != lim) {
                 if (data["action"][pos]["activate"] == true) {
                     apiName = data["action"][pos]["name"]
-                    APIRequestList[apiName](uid);
+                    APIRequestList[apiName](uid, data, pos);
                 }
                 pos += 1
             }
         })
-        await sleep(1000);
+        await sleep(5000);
     }
     console.log("stop API")
 }

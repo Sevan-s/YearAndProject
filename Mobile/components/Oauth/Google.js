@@ -1,49 +1,35 @@
-import React from 'react';
-import { View, Button, StyleSheet, Pressable, Text } from 'react-native';
-import * as Google from 'expo-google-app-auth';
+import { View, StyleSheet, Pressable, Text } from 'react-native';
+import * as React from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import { Button } from 'react-native';
+const servCom = require('./../../communicateServer');
 
-const responseGoogle = (result) => {
-  axios.post("http://localhost:8080/user/oauth/", {"username": result.user, "password": result.idToken, "OAUTH": true})
-  axios.post("http://localhost:8080/user/setAccountLink/", {"token": result.accessToken, "name": "Google"})
-  window.location.reload(false);
-}
+WebBrowser.maybeCompleteAuthSession();
 
-export default function GoogleConnexion () {
+export default function GoogleConnexion() {
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: '748486023082-7d0a346g33366k9ftbp37n0u2jh70fcr.apps.googleusercontent.com',
+    iosClientId: '748486023082-p47feo8sa31ljlknulfcd05b8ilb37lh.apps.googleusercontent.com',
+    androidClientId: '748486023082-eg5hdh1vqor9konl4doskhr902nfjj6v.apps.googleusercontent.com',
+    webClientId: '748486023082-7d0a346g33366k9ftbp37n0u2jh70fcr.apps.googleusercontent.com',
+  });
 
-  async function signInWithGoogleAsync() {
-    try {
-      const result = await Google.logInAsync({
-        behavior: 'web',
-        iosClientId: "748486023082-p47feo8sa31ljlknulfcd05b8ilb37lh.apps.googleusercontent.com",
-        androidClientId: "748486023082-eg5hdh1vqor9konl4doskhr902nfjj6v.apps.googleusercontent.com",
-        scopes: ['profile', 'email'],
-      });
-
-      if (result.type === 'success') {
-        responseGoogle(result);
-        result.accessToken
-        return (0);
-      } else {
-        return { cancelled: true };
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      servCom.oauthGoogle(response);
       }
-    } catch (e) {
-      return { error: true };
-    }
-  }
+  }, [response]);
 
-  const signInWithGoogle = () => {
-    signInWithGoogleAsync()
-    }
-
-    return (
-        <View>
-            <Pressable 
-                style={styles.buttonAction}
-                onPress={() => signInWithGoogle()} title="Sign in with Google">
-                <Text style={styles.buttonTxt}>CONTINUE WITH GOOGLE</Text>
-            </Pressable>
-        </View>
-    );
+  return (
+    <Pressable 
+      style={styles.buttonAction}
+      disabled={!request}
+      onPress={() => { promptAsync();}}>
+      <Text style={styles.buttonTxt}>CONTINUE WITH GOOGLE</Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
