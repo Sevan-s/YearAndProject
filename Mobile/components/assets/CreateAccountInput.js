@@ -13,14 +13,6 @@ function CreateAccount(props) {
             <TextInput style={styles.inputTxt}
                 value={mail}
                 onChangeText={text => setMail(text)}
-                style={{
-                    height: 34, backgroundColor: 'white',
-                    width: 275,
-                    borderRadius: 10,
-                    fontSize: 20,
-                    paddingLeft: 10,
-                    marginBottom: 25,
-                }}
                 placeholder="My@mail.here"
             />
             <Text style={styles.inputTitle2}>Password</Text>
@@ -28,14 +20,6 @@ function CreateAccount(props) {
                 secureTextEntry={true}
                 value={password}
                 onChangeText={text => setPassword(text)}
-                style={{
-                    height: 34, backgroundColor: 'white',
-                    width: 275,
-                    borderRadius: 10,
-                    paddingLeft: 10,
-                    fontSize: 20,
-                    marginBottom: 25,
-                }}
                 placeholder="my_$ecr3t!/p4ssW0rd"
             />
             <Text style={styles.inputTitle3}>Verify password</Text>
@@ -43,13 +27,6 @@ function CreateAccount(props) {
                 secureTextEntry={true}
                 value={verifyPassword}
                 onChangeText={text => setVerifyPassword(text)}
-                style={{
-                    height: 34, backgroundColor: 'white',
-                    width: 275,
-                    paddingLeft: 10,
-                    borderRadius: 10,
-                    fontSize: 20,
-                }}
                 placeholder="my_$ecr3t!/p4ssW0rd"
             />
             <View style={styles.button}>
@@ -60,7 +37,7 @@ function CreateAccount(props) {
                 navigation={props.navigation}
                 />
                 <Text style={styles.or}>or</Text>
-                <GoogleConnexion />
+                <GoogleConnexion navigation={props.navigation}/>
             </View>
         </View>
     )
@@ -108,6 +85,13 @@ const styles = StyleSheet.create({
         marginRight: 10,
         textAlign: 'left',
         color: 'white',
+        height: 34, 
+        backgroundColor: 'white',
+        width: 275,
+        borderRadius: 10,
+        paddingLeft: 10,
+        fontSize: 20,
+        marginBottom: 25,
     },
 });
 

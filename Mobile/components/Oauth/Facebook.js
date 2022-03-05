@@ -1,37 +1,49 @@
 import * as React from 'react';
-import * as Facebook from 'expo-facebook';
-import { View, Alert, Pressable, Text } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
+import * as Facebook from 'expo-auth-session/providers/facebook';
+import { ResponseType } from 'expo-auth-session';
+import { Button } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 
-const FaceboolLogin = () => {
+WebBrowser.maybeCompleteAuthSession();
 
-  async function logIn() {
-    try {
-      await Facebook.initializeAsync({
-        appId: '3163056723974155',
-      });
-      const { type, token, expirationDate, permissions, declinedPermissions } =
-        await Facebook.logInWithReadPermissionsAsync({
-          permissions: ['public_profile'],
-        });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
+export default function FacebookLogin() {
+  const [request, response, promptAsync] = Facebook.useAuthRequest({
+    clientId: '3163056723974155',
+  });
+
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
     }
-  }
+  }, [response]);
 
   return (
     <View>
-        <Pressable 
-            style={styles.buttonAction}
-            onPress={() => logIn()} title="Login">
-            <Text style={styles.buttonTxt}>CONTINUE WITH FACEBOOK</Text>
-        </Pressable>
+      <Pressable style={styles.buttonAction}
+        disabled={!request}
+        onPress={() => promptAsync()} title="Login">
+        <Text style={styles.buttonTxt}>CONTINUE WITH FACEBOOK</Text>
+      </Pressable>
     </View>
-    )
+  )
 }
 
-export default FaceboolLogin;
+const styles = StyleSheet.create({
+  buttonAction: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    marginTop: 15,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingLeft: 5,
+    paddingRight: 5,
+  },
+  buttonTxt: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  }
+})

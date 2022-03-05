@@ -48,29 +48,43 @@ function addUser(username, password, OAUTH, callback) {
             name: "new Mail",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R"],
-            desc: "New mail receive",
+            reaction_allow: ["test-R", "Mail"],
+            desc: "Nouveau mail reçu",
             last_res: {}
         }, {
             name: "test-A",
             activate: false,
             reaction: ["test-R"],
-            reaction_allow: ["test-R"],
+            reaction_allow: ["test-R", "Mail"],
             desc: "Juste un teste afin de savoir tout ce qu'il se passe",
             last_res: {}
         }, {
             name: "Horoscope",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R"],
+            reaction_allow: ["test-R", "Mail"],
             desc: "Pour obtenir l'horoscope d'aujourd'hui des Capricornes",
             last_res: {}
         }, {
             name: "Meteo",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R"],
+            reaction_allow: ["test-R", "Mail"],
             desc: "Pour obtenir la météo de Toulouse!",
+            last_res: {}
+        }, {
+            name: "Meteo",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["test-R", "Mail"],
+            desc: "Pour obtenir la météo de Toulouse!",
+            last_res: {}
+        }, {
+            name: "Yammer msg reçu",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["test-R", "Mail"],
+            desc: "Notification si un message Yammer est reçu",
             last_res: {}
         }],
         OAUTH: OAUTH

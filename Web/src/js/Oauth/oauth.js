@@ -66,7 +66,6 @@ export default function Oauth() {
       />
       <FacebookLogin
         appId="3163056723974155"
-        autoLoad={false}
         fields="name,email,picture"
         callback={responseFacebook}
       />

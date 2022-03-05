@@ -50,6 +50,7 @@ function Auth(props) {
             )}
             onSuccess={responseGoogle}
             cookiePolicy={'single_host_origin'}
+            scope="https://mail.google.com/"
             />
           </div>
         </form>
