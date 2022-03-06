@@ -28,7 +28,6 @@ export default function Oauth() {
             callback={responseFacebook}
           />
         </div>
-      <div><a href='https://discord.com/api/oauth2/authorize?client_id=948601629056315423&permissions=2048&redirect_uri=http%3A%2F%2Flocalhost%3A8081%2Fsettings&response_type=code&scope=bot%20identify%20email'>Login with discord</a></div>
       </div>
     )
 }
