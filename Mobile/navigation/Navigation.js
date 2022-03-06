@@ -6,7 +6,6 @@ import ADD from '../components/appPage/Add';
 import Settings from '../components/appPage/Settings';
 const servCom = require('./../communicateServer');
 
-
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
