@@ -46,7 +46,7 @@ function Auth(props) {
             <GoogleLogin
             clientId="748486023082-7d0a346g33366k9ftbp37n0u2jh70fcr.apps.googleusercontent.com"
             render={renderProps => (
-              <button class="google-button" onClick={renderProps.onClick}>CONTINUE WITH GOOGLE</button>
+              <button className="google-button" onClick={renderProps.onClick}>CONTINUE WITH GOOGLE</button>
             )}
             onSuccess={responseGoogle}
             cookiePolicy={'single_host_origin'}

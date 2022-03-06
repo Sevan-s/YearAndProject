@@ -51,71 +51,85 @@ function addUser(username, password, OAUTH, callback) {
             name: "new Mail",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Nouveau mail reçu",
             last_res: {'total': -1}
         }, {
-            name: "test-A",
+            name: "Debug",
             activate: false,
-            reaction: ["test-R"],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction: ["Debug"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Juste un teste afin de savoir tout ce qu'il se passe",
             last_res: {}
         }, {
             name: "Horoscope",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Pour obtenir l'horoscope d'aujourd'hui des Capricornes",
             last_res: {'date': -1}
         }, {
             name: "Meteo",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Pour obtenir la météo de Toulouse!",
             last_res: {'date': -1}
         }, {
             name: "Calendar",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Si une activité planifié arrive dans les 30min",
             last_res: {'crdate': []}
         }, {
             name: "Crypto",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Obtenir le prix du bitcoin toutes les heures",
             last_res: {'date': -1}
         }, {
             name: "Covid",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Info du Covid en France",
             last_res: {'date': -1}
         }, {
             name: "TekStory",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Url de la dernière story de Khaby",
             last_res: {'date': -1}
         }, {
             name: "WolrdNewsFr",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Dernières Actualitées",
             last_res: {'date': -1}
         }, {
             name: "TheBestJoke",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail", "Message"],
+            reaction_allow: ["Debug", "Mail"],
             desc: "Un peu de plaisir !",
+            last_res: {'date': -1}
+        }, {
+            name: "GameNews",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["Debug", "Mail"],
+            desc: "Game News",
+            last_res: {'date': -1}
+        }, {
+            name: "TopNetflix",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["Debug", "Mail"],
+            desc: "Top Netflix",
             last_res: {'date': -1}
         }],
         OAUTH: OAUTH

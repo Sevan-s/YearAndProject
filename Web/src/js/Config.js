@@ -13,7 +13,7 @@ function ConfigWidget(props) {
     props.api.then(data => {setApi(data); apiSave = data});
 
     return (   
-        <div>
+        <div className="serviceWrapper" id="widgetParent">
             {api?.map(item => {
                 return (
                     <div className="widgetReaction">

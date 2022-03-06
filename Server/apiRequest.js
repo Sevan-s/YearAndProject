@@ -5,13 +5,13 @@ const { Client, Intents } = require('discord.js');
 
 //////////////////////////////// QUEUE
 
-const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar, "Crypto": crypto, "Covid": GetCovidFrenchStat, "TekStory": GetTekNatioStory, "WolrdNewsFr": WolrdNewsFr, "TheBestJoke": TheBestJoke}
+const APIRequestList = { "Debug": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar, "Crypto": crypto, "Covid": GetCovidFrenchStat, "TekStory": GetTekNatioStory, "WolrdNewsFr": WolrdNewsFr, "TheBestJoke": TheBestJoke, "GameNews": GameNews, "TopNetflix": TopNetflix}
 
-const reactionList = {"test-R": test_R, "Mail": mail, "Message": message}
+const reactionList = { "Debug": test_R, "Mail": mail, "Message": message }
 
 var queue = {}
 
-const client = new Client({ intents: [Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_MESSAGES] })
+//const client = new Client({ intents: [Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_MESSAGES] })
 
 function stopApiProcess(uid) {
     delete queue[uid];
@@ -26,7 +26,7 @@ function test_R(action, uid, params) {
 }
 
 function callReaction(name, uid, params) {
-    DBCommunicate.getUserByID(uid, function(data) {
+    DBCommunicate.getUserByID(uid, function (data) {
         data['action'].forEach(element => {
             if (element.name == name) {
                 element["reaction"].forEach(reaction => {
@@ -38,13 +38,14 @@ function callReaction(name, uid, params) {
 }
 
 function message(action, uid, params) {
-    DBCommunicate.getUserByID(uid, function(data) {
+    DBCommunicate.getUserByID(uid, function (data) {
         var GoogleToken = ""
         data["account_link"].forEach(element => {
             if (element.name == "Google")
                 GoogleToken = element.token
         });
-        const  options = { method: 'GET',
+        const options = {
+            method: 'GET',
             headers: { 'Authorization': `Bearer ${GoogleToken}` },
             mode: 'cors',
             cache: 'default',
@@ -59,7 +60,7 @@ function message(action, uid, params) {
                 url: 'https://smsapi-com3.p.rapidapi.com/sms.do',
                 params: {
                     access_token: 'QllmSB9NHcOZRvwlkV98cjEdLMxEQxbv4FXdEpy7',
-                    
+
                 },
                 headers: {
                     'x-rapidapi-host': 'smsapi-com3.p.rapidapi.com',
@@ -85,7 +86,7 @@ function message(action, uid, params) {
                     "fast": "",
                     "notify_url": "",
                     "format": "json"
-                 }
+                }
             };
             axios.request(options).then(function (response) {
                 console.log(response.data);
@@ -101,13 +102,14 @@ function message(action, uid, params) {
 }
 
 function mail(action, uid, params) {
-    DBCommunicate.getUserByID(uid, function(data) {
+    DBCommunicate.getUserByID(uid, function (data) {
         var GoogleToken = ""
         data["account_link"].forEach(element => {
             if (element.name == "Google")
                 GoogleToken = element.token
         });
-        const  options = { method: 'GET',
+        const options = {
+            method: 'GET',
             headers: { 'Authorization': `Bearer ${GoogleToken}` },
             mode: 'cors',
             cache: 'default',
@@ -118,23 +120,23 @@ function mail(action, uid, params) {
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                  user: 'dws.area1@gmail.com',
-                  pass: 'DWS.area1'
+                    user: 'dws.area1@gmail.com',
+                    pass: 'DWS.area1'
                 }
             });
-        
+
             var mailOptions = {
                 from: 'dws.area1@gmail.com',
                 to: response.data.email,
                 subject: "DWS: " + action,
                 text: params
             };
-        
-            transporter.sendMail(mailOptions, function(error, info){
+
+            transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
-                  console.log(error);
+                    console.log(error);
                 } else {
-                  console.log('Email sent: ' + info.response);
+                    console.log('Email sent: ' + info.response);
                 }
             });
         }).catch(function (error) {
@@ -148,12 +150,12 @@ function mail(action, uid, params) {
 //     client.on('ready', () => {
 //         conslotchange.log('Client discord start')
 //     })
-//     client.login('OTQ4NjAxNjI5MDU2MzE1NDIz.Yh-MHA.BwAPi17cPnQo5xbfYKFbCAQ1lCE')
+//     client.login('sOTQ4NjAxNjI5MDU2MzE1NDIz.Yh-MHA.BwAPi17cPnQo5xbfYKFbCAQ1lCE')
 //     client.send('message', message => {
 //         message.author.send()
 //     })
 // }
-  
+
 
 //////////////////////////////////////
 
@@ -163,14 +165,18 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+
+
+
 function updateMail(uid, data, pos) {
-    DBCommunicate.getUserByID(uid, function(data) {
+    DBCommunicate.getUserByID(uid, function (data) {
         GoogleToken = ""
         data["account_link"].forEach(element => {
             if (element.name == "Google")
                 GoogleToken = element.token
         });
-        var options = { method: 'GET',
+        var options = {
+            method: 'GET',
             headers: { 'Authorization': `Bearer ${GoogleToken}` },
             mode: 'cors',
             cache: 'default',
@@ -183,7 +189,7 @@ function updateMail(uid, data, pos) {
                 DBCommunicate.replaceUserByID(uid, data);
             } else if (data["action"][pos]["last_res"].total != response.data.messagesTotal) {
                 callReaction("new Mail", uid, response.data.messagesTotal);
-                data["action"][pos]["last_res"] = {"total": response.data.messagesTotal}
+                data["action"][pos]["last_res"] = { "total": response.data.messagesTotal }
                 DBCommunicate.replaceUserByID(uid, data);
             } else {
                 console.log(response.data.messagesTotal)
@@ -197,13 +203,14 @@ function updateMail(uid, data, pos) {
 
 
 function getCalendar(uid, data, pos) {
-    DBCommunicate.getUserByID(uid, function(data) {
+    DBCommunicate.getUserByID(uid, function (data) {
         GoogleToken = ""
         data["account_link"].forEach(element => {
             if (element.name == "Google")
                 GoogleToken = element.token
         });
-        var options = { method: 'GET',
+        var options = {
+            method: 'GET',
             headers: { 'Authorization': `Bearer ${GoogleToken}` },
             mode: 'cors',
             cache: 'default',
@@ -231,18 +238,18 @@ function getCalendar(uid, data, pos) {
             console.error(error)
         });
     })
-  }
+}
 
 function meteo(uid, data, pos) {
     const date = new Date();
     if (data["action"][pos]["last_res"]['date'] != date.getDate()) {
-    
+
         var axios = require("axios").default;
 
         var options = {
             method: 'GET',
             url: 'https://community-open-weather-map.p.rapidapi.com/forecast',
-            params: {q: 'toulouse,fr', lang: 'fr'},
+            params: { q: 'toulouse,fr', lang: 'fr' },
             headers: {
                 'x-rapidapi-host': 'community-open-weather-map.p.rapidapi.com',
                 'x-rapidapi-key': '7bcf4947femshfb0ea70e3cceafdp170df7jsncd0f411563e1'
@@ -251,7 +258,7 @@ function meteo(uid, data, pos) {
 
         axios.request(options).then(function (response) {
             callReaction("Meteo", uid, response.data);
-            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function (error) {
             console.error("ERROR: WEATHER");
@@ -272,7 +279,7 @@ function crypto(uid, data, pos) {
 
         axios.request(options).then(function (response) {
             callReaction("Crypto", uid, response.data.market_data.current_price.eur + "€");
-            data["action"][pos]["last_res"] = {"date": date.getHours()}
+            data["action"][pos]["last_res"] = { "date": date.getHours() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function (_) {
             console.error("ERROR: HOROSCOPE");
@@ -287,14 +294,14 @@ function GetCovidFrenchStat(uid, data, pos) {
             method: 'GET',
             url: 'https://covid-19-tracking.p.rapidapi.com/v1/France',
             headers: {
-            'x-rapidapi-host': 'covid-19-tracking.p.rapidapi.com',
-            'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
+                'x-rapidapi-host': 'covid-19-tracking.p.rapidapi.com',
+                'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
             }
         };
-        
+
         axios.request(options).then(function (response) {
             callReaction("Covid", uid, response.data);
-            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
             console.error("ERROR: CovidInfo");
@@ -331,7 +338,7 @@ function horoscope(uid, data, pos) {
         var options = {
             method: 'POST',
             url: 'https://sameer-kumar-aztro-v1.p.rapidapi.com/',
-            params: {sign: 'capricorn', day: 'today'},
+            params: { sign: 'capricorn', day: 'today' },
             headers: {
                 'x-rapidapi-host': 'sameer-kumar-aztro-v1.p.rapidapi.com',
                 'x-rapidapi-key': '7bcf4947femshfb0ea70e3cceafdp170df7jsncd0f411563e1'
@@ -340,7 +347,7 @@ function horoscope(uid, data, pos) {
 
         axios.request(options).then(function (response) {
             callReaction("Horoscope", uid, response.data);
-            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function (_) {
             console.error("ERROR: HOROSCOPE");
@@ -354,16 +361,16 @@ function WolrdNewsFr(uid, data, pos) {
         const options = {
             method: 'GET',
             url: 'https://google-news1.p.rapidapi.com/top-headlines',
-            params: {country: 'France', lang: 'fr', limit: '50'},
+            params: { country: 'France', lang: 'fr', limit: '50' },
             headers: {
-            'x-rapidapi-host': 'google-news1.p.rapidapi.com',
-            'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
+                'x-rapidapi-host': 'google-news1.p.rapidapi.com',
+                'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
             }
         };
-        
+
         axios.request(options).then(function (response) {
             callReaction("WolrdNewsFr", uid, response.data);
-            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
             console.error("ERROR: WNfr");
@@ -378,23 +385,68 @@ function TheBestJoke(uid, data, pos) {
             method: 'GET',
             url: 'https://jokeapi-v2.p.rapidapi.com/joke/Any',
             params: {
-            format: 'json',
-            contains: 'C%23',
-            idRange: '0-150',
-            blacklistFlags: 'nsfw,racist'
+                format: 'json',
+                contains: 'C%23',
+                idRange: '0-150',
+                blacklistFlags: 'nsfw,racist'
             },
             headers: {
-            'x-rapidapi-host': 'jokeapi-v2.p.rapidapi.com',
-            'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
+                'x-rapidapi-host': 'jokeapi-v2.p.rapidapi.com',
+                'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
             }
         };
-        
+
         axios.request(options).then(function (response) {
             callReaction("TheBestJoke", uid, response.data);
-            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
             console.error("ERROR: TBJ");
+        });
+    }
+}
+
+function GameNews(uid, data, pos) {
+    const date = new Date();
+    if (data["action"][pos]["last_res"]['date'] != date.getDate()) {
+        const options = {
+            method: 'GET',
+            url: 'https://videogames-news2.p.rapidapi.com/videogames_news/recent',
+            headers: {
+                'x-rapidapi-host': 'videogames-news2.p.rapidapi.com',
+                'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
+            }
+        };
+
+        axios.request(options).then(function (response) {
+            callReaction("GameNews", uid, response.data);
+            data["action"][pos]["last_res"] = { "date": date.getDate() }
+            DBCommunicate.replaceUserByID(uid, data);
+        }).catch(function () {
+            console.error("Error GameNews");
+        });
+    }
+}
+
+function TopNetflix(uid, data, pos) {
+    const date = new Date();
+
+    if (data["action"][pos]["last_res"]['date'] != date.getDate()) {
+        const options = {
+            method: 'GET',
+            url: 'https://netflix-weekly-top-10.p.rapidapi.com/api/othermovie',
+            headers: {
+                'x-rapidapi-host': 'netflix-weekly-top-10.p.rapidapi.com',
+                'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
+            }
+        };
+
+        axios.request(options).then(function (response) {
+            callReaction("TopNetflix", uid, response.data);
+            data["action"][pos]["last_res"] = { "date": date.getDate() }
+            DBCommunicate.replaceUserByID(uid, data);
+        }).catch(function () {
+            console.error("Error Netflix");
         });
     }
 }
@@ -412,9 +464,9 @@ async function requestApi(uid) {
     console.log("start API");
     var pos = 0;
     if (!queue[uid])
-    queue[uid] = [];
+        queue[uid] = [];
     while (queue[uid]) {
-        DBCommunicate.getUserByID(uid, function(data) {
+        DBCommunicate.getUserByID(uid, function (data) {
             const lim = data["action"].length
             if (pos == lim)
                 pos = 0
@@ -433,4 +485,4 @@ async function requestApi(uid) {
 
 //////////////////////////////////////
 
-module.exports = {requestApi, stopApiProcess};
+module.exports = { requestApi, stopApiProcess };

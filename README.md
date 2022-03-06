@@ -28,7 +28,13 @@ docker-compose down
 2- remplacer l'ip dans /Mobile/communicateServer.js par celle obtenu précédement
 
 Action (Tout dois se faire dans le dossier Mobile):
+- pour initialiser le projet:
+```sh
+npm start
+```
+
 - pour lancer:
 ```sh
-docker-compose down
+expo start
 ```
+Puis suivre les indications données par expo (/!\ il faut le lancer via emulateur, pour que l'application puisse faire les requètes au serveur)
