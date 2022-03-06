@@ -204,7 +204,7 @@ function getIp(req) {
   var clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   if (clientIp == "::1")
     clientIp = "127.0.0.1";
-  return (clientIp);
+  return (clientIp.replace("::ffff:", ""));
 }
 
 function getService(req) {
@@ -217,7 +217,7 @@ function getService(req) {
       "server ": {
         "current_time ": date,
         "services ": [{
-          "name": "Gmail",
+          "name": "Gmail",  
           "actions ": [{
             "name": "new_mail",
             "description ": "A new mail is received by the user"
@@ -294,7 +294,6 @@ function getService(req) {
 }
 
 app.get('/about.json', (req, res) => {
-  const date = Date.now();
   res.json(getService(req));
 });
 
