@@ -4,7 +4,7 @@ var nodemailer = require('nodemailer');
 
 //////////////////////////////// QUEUE
 
-const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar}
+const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar, "Crypto": crypto}
 
 const reactionList = {"test-R": test_R, "Mail": mail}
 
@@ -178,6 +178,28 @@ function meteo(uid, data, pos) {
         });
     }
 }
+
+function crypto(uid, data, pos) {
+    const date = new Date();
+    if (data["action"][pos]["last_res"]['date'] != date.getHours()) {
+        var options = {
+            method: 'GET',
+            url: 'https://api.coingecko.com/api/v3/coins/bitcoin',
+            headers: {
+                'accept': 'application/json'
+            }
+        };
+
+        axios.request(options).then(function (response) {
+            callReaction("Crypto", uid, response.data.market_data.current_price.eur + "€");
+            data["action"][pos]["last_res"] = {"date": date.getHours()}
+            DBCommunicate.replaceUserByID(uid, data);
+        }).catch(function (_) {
+            console.error("ERROR: HOROSCOPE");
+        });
+    }
+}
+
 
 function horoscope(uid, data, pos) {
     const date = new Date();

@@ -79,6 +79,13 @@ function addUser(username, password, OAUTH, callback) {
             reaction_allow: ["test-R", "Mail"],
             desc: "Si une activité planifié arrive dans les 30min",
             last_res: {'crdate': []}
+        }, {
+            name: "Crypto",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["test-R", "Mail"],
+            desc: "Obtenir le prix du bitcoin toutes les heures",
+            last_res: {'date': -1}
         }],
         OAUTH: OAUTH
     }).run(connection, callback);
