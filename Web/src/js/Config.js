@@ -16,7 +16,7 @@ function ConfigWidget(props) {
         <div>
             {api?.map(item => {
                 return (
-                    <div className="widget">
+                    <div className="widgetReaction">
                         <h3>{item.name}</h3>
                         {item.reaction_allow.map(reac => {
                             if (item.reaction.includes(reac))
