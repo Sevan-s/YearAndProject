@@ -11,7 +11,6 @@ export default function Navbar() {
           <Link className="items" to="/home">Home</Link>
           <Link className="items" to="/config">Config</Link>
           <Link className="items" to="/settings">Settings</Link>
-          <Link className="items" to="/user">User</Link>
         </div>
         <Link className="itemsSignOut" to="/disconnect">Sign out</Link>
       </nav>
