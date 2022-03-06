@@ -22,18 +22,10 @@ function CreateAccount(props) {
                 onChangeText={text => setPassword(text)}
                 placeholder="my_$ecr3t!/p4ssW0rd"
             />
-            <Text style={styles.inputTitle3}>Verify password</Text>
-            <TextInput style={styles.inputTxt}
-                secureTextEntry={true}
-                value={verifyPassword}
-                onChangeText={text => setVerifyPassword(text)}
-                placeholder="my_$ecr3t!/p4ssW0rd"
-            />
             <View style={styles.button}>
                 <RegisterButton 
                 user={mail}
                 pass={password}
-                verifyPassword={verifyPassword}
                 navigation={props.navigation}
                 />
                 <Text style={styles.or}>or</Text>
@@ -73,18 +65,12 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
     },
-    inputTitle3: {
-        color: 'white',
-        fontSize: 16,
-        marginLeft: 10,
-        marginRight: 10,
-    },
 
     inputTxt: {
         marginLeft: 10,
         marginRight: 10,
         textAlign: 'left',
-        color: 'white',
+        color: 'black',
         height: 34, 
         backgroundColor: 'white',
         width: 275,

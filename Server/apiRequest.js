@@ -1,14 +1,17 @@
 const DBCommunicate = require('./communicateDB')
 var axios = require("axios").default;
 var nodemailer = require('nodemailer');
+const { Client, Intents } = require('discord.js');
 
 //////////////////////////////// QUEUE
 
-const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar, "Crypto": crypto, "Covid": GetCovidFrenchStat, "TekStory": GetTekNatioStory}
+const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar, "Crypto": crypto, "Covid": GetCovidFrenchStat, "TekStory": GetTekNatioStory, "WolrdNewsFr": WolrdNewsFr, "TheBestJoke": TheBestJoke}
 
 const reactionList = {"test-R": test_R, "Mail": mail, "Message": message}
 
 var queue = {}
+
+const client = new Client({ intents: [Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_MESSAGES] })
 
 function stopApiProcess(uid) {
     delete queue[uid];
@@ -45,32 +48,51 @@ function message(action, uid, params) {
             headers: { 'Authorization': `Bearer ${GoogleToken}` },
             mode: 'cors',
             cache: 'default',
-            url: 'https://www.googleapis.com/oauth2/v1/userinfo'
+            url: 'https://people.googleapis.com/v1/people/me?personFields=phoneNumbers'
         };
 
         axios.request(options).then(function (response) {
-            console.log(response.data.phoneNumber)
-            // var options = {
-            //     method: 'POST',
-            //     url: 'https://sms77io.p.rapidapi.com/sms',
-            //     headers: {
-            //       'content-type': 'application/x-www-form-urlencoded',
-            //       'x-rapidapi-host': 'sms77io.p.rapidapi.com',
-            //       'x-rapidapi-key': 'b4d44a9d52mshb828cbbe5b44f79p125528jsnd4e9f091ac57'
-            //     },
-            //     data: {
-            //       to: response.phoneNumber,
-            //       p: '93HVa2aL9WqECONMJcOP0OU1rBZZB9TtOHsZEJknF3lMB7pmFRCQGwMsvrRndQ6U',
-            //       text: params
-            //     }
-            //   };
-              
-            //   axios.request(options).then(function (response) {
-            //       console.log(response);
-            //   }).catch(function (error) {
-            //       console.log("ERROR : MESSAGE")
-            //       console.error(error);
-            //   });
+            var axios = require("axios").default;
+
+            var options = {
+                method: 'POST',
+                url: 'https://smsapi-com3.p.rapidapi.com/sms.do',
+                params: {
+                    access_token: 'QllmSB9NHcOZRvwlkV98cjEdLMxEQxbv4FXdEpy7',
+                    
+                },
+                headers: {
+                    'x-rapidapi-host': 'smsapi-com3.p.rapidapi.com',
+                    'x-rapidapi-key': '7bcf4947femshfb0ea70e3cceafdp170df7jsncd0f411563e1'
+                },
+                body: {
+                    "to": response.data.phoneNumbers[0].canonicalForm,
+                    "message": params,
+                    "from": "",
+                    "normalize": "",
+                    "group": "",
+                    "encoding": "",
+                    "flash": "",
+                    "test": "",
+                    "details": "",
+                    "date": "",
+                    "date_validate": "",
+                    "time_restriction": "follow",
+                    "allow_duplicates": "",
+                    "idx": "",
+                    "check_idx": "",
+                    "max_parts": "",
+                    "fast": "",
+                    "notify_url": "",
+                    "format": "json"
+                 }
+            };
+            axios.request(options).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.error(error);
+                console.log("ERROR: MESSAGE")
+            });
         }).catch(function (error) {
             console.error("ERROR: MESSAGE-NUMBER");
             console.error(error)
@@ -121,6 +143,16 @@ function mail(action, uid, params) {
         });
     })
 }
+
+// function discordMessage(action, uid, params) {
+//     client.on('ready', () => {
+//         conslotchange.log('Client discord start')
+//     })
+//     client.login('OTQ4NjAxNjI5MDU2MzE1NDIz.Yh-MHA.BwAPi17cPnQo5xbfYKFbCAQ1lCE')
+//     client.send('message', message => {
+//         message.author.send()
+//     })
+// }
   
 
 //////////////////////////////////////
@@ -146,12 +178,15 @@ function updateMail(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            if (data["action"][pos]["last_res"].total == -1)
+            if (data["action"][pos]["last_res"].total == -1) {
                 data["action"][pos]["last_res"].total = response.data.messagesTotal
-            else if (data["action"][pos]["last_res"].total == response.data.messagesTotal) {
-                callReaction("new Mail", uid, respose.data.messagesTotal);
+                DBCommunicate.replaceUserByID(uid, data);
+            } else if (data["action"][pos]["last_res"].total != response.data.messagesTotal) {
+                callReaction("new Mail", uid, response.data.messagesTotal);
                 data["action"][pos]["last_res"] = {"total": response.data.messagesTotal}
                 DBCommunicate.replaceUserByID(uid, data);
+            } else {
+                console.log(response.data.messagesTotal)
             }
         }).catch(function (error) {
             console.error("ERROR: MAIL");
@@ -309,6 +344,57 @@ function horoscope(uid, data, pos) {
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function (_) {
             console.error("ERROR: HOROSCOPE");
+        });
+    }
+}
+
+function WolrdNewsFr(uid, data, pos) {
+    const date = new Date();
+    if (data["action"][pos]["last_res"]['date'] != date.getDate()) {
+        const options = {
+            method: 'GET',
+            url: 'https://google-news1.p.rapidapi.com/top-headlines',
+            params: {country: 'France', lang: 'fr', limit: '50'},
+            headers: {
+            'x-rapidapi-host': 'google-news1.p.rapidapi.com',
+            'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
+            }
+        };
+        
+        axios.request(options).then(function (response) {
+            callReaction("WolrdNewsFr", uid, response.data);
+            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            DBCommunicate.replaceUserByID(uid, data);
+        }).catch(function () {
+            console.error("ERROR: WNfr");
+        });
+    }
+}
+
+function TheBestJoke(uid, data, pos) {
+    const date = new Date();
+    if (data["action"][pos]["last_res"]['date'] != date.getDate()) {
+        const options = {
+            method: 'GET',
+            url: 'https://jokeapi-v2.p.rapidapi.com/joke/Any',
+            params: {
+            format: 'json',
+            contains: 'C%23',
+            idRange: '0-150',
+            blacklistFlags: 'nsfw,racist'
+            },
+            headers: {
+            'x-rapidapi-host': 'jokeapi-v2.p.rapidapi.com',
+            'x-rapidapi-key': 'e83d6e0947mshfeed2b2d169563bp185860jsn3ea78bab8c7b'
+            }
+        };
+        
+        axios.request(options).then(function (response) {
+            callReaction("TheBestJoke", uid, response.data);
+            data["action"][pos]["last_res"] = {"date": date.getDate()}
+            DBCommunicate.replaceUserByID(uid, data);
+        }).catch(function () {
+            console.error("ERROR: TBJ");
         });
     }
 }

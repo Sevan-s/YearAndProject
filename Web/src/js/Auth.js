@@ -50,7 +50,7 @@ function Auth(props) {
             )}
             onSuccess={responseGoogle}
             cookiePolicy={'single_host_origin'}
-            scope="https://mail.google.com/ https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly"
+            scope="https://mail.google.com/ https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/user.phonenumbers.read"
             />
           </div>
         </form>

@@ -43,6 +43,9 @@ function addUser(username, password, OAUTH, callback) {
         },{
             name: "Microsoft",
             token: ""
+        },{
+            name: "Discord",
+            token: ""
         }],
         action: [{
             name: "new Mail",
@@ -97,8 +100,22 @@ function addUser(username, password, OAUTH, callback) {
             name: "TekStory",
             activate: false,
             reaction: [],
-            reaction_allow: ["test-R", "Mail"],
-            desc: "Url de la dernière story Epitech",
+            reaction_allow: ["test-R", "Mail", "Message"],
+            desc: "Url de la dernière story de Khaby",
+            last_res: {'date': -1}
+        }, {
+            name: "WolrdNewsFr",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["test-R", "Mail", "Message"],
+            desc: "Dernières Actualitées",
+            last_res: {'date': -1}
+        }, {
+            name: "TheBestJoke",
+            activate: false,
+            reaction: [],
+            reaction_allow: ["test-R", "Mail", "Message"],
+            desc: "Un peu de plaisir !",
             last_res: {'date': -1}
         }],
         OAUTH: OAUTH
@@ -133,7 +150,7 @@ function replaceUserByID(accountID, data) {
 //////////////////////////////
 
 function connect() {
-    r.connect({host: '172.19.0.2', port: 28015}, function(err, conn) {
+    r.connect({host: '172.25.0.2', port: 28015}, function(err, conn) {
         if (err) {
             console.log(err);
             setTimeout(connect, 1000);
