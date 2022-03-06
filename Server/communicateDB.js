@@ -64,28 +64,21 @@ function addUser(username, password, OAUTH, callback) {
             reaction: [],
             reaction_allow: ["test-R", "Mail"],
             desc: "Pour obtenir l'horoscope d'aujourd'hui des Capricornes",
-            last_res: {}
+            last_res: {'date': -1}
         }, {
             name: "Meteo",
             activate: false,
             reaction: [],
             reaction_allow: ["test-R", "Mail"],
             desc: "Pour obtenir la météo de Toulouse!",
-            last_res: {}
+            last_res: {'date': -1}
         }, {
-            name: "Meteo",
+            name: "Calendar",
             activate: false,
             reaction: [],
             reaction_allow: ["test-R", "Mail"],
-            desc: "Pour obtenir la météo de Toulouse!",
-            last_res: {}
-        }, {
-            name: "Yammer msg reçu",
-            activate: false,
-            reaction: [],
-            reaction_allow: ["test-R", "Mail"],
-            desc: "Notification si un message Yammer est reçu",
-            last_res: {}
+            desc: "Si une activité planifié arrive dans les 30min",
+            last_res: {'crdate': []}
         }],
         OAUTH: OAUTH
     }).run(connection, callback);
@@ -119,7 +112,7 @@ function replaceUserByID(accountID, data) {
 //////////////////////////////
 
 function connect() {
-    r.connect({host: '172.19.0.2', port: 28015}, function(err, conn) {
+    r.connect({host: '172.25.0.2', port: 28015}, function(err, conn) {
         if (err) {
             console.log(err);
             setTimeout(connect, 1000);

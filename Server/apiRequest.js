@@ -1,10 +1,10 @@
 const DBCommunicate = require('./communicateDB')
 var axios = require("axios").default;
-var YammerAPIClient = require('yammer-rest-api-client');
+var nodemailer = require('nodemailer');
 
 //////////////////////////////// QUEUE
 
-const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Yammer msg reçu": yammerMessageReceived}
+const APIRequestList = {"test-A": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar}
 
 const reactionList = {"test-R": test_R, "Mail": mail}
 
@@ -18,11 +18,7 @@ function stopApiProcess(uid) {
 
 //////////////////////// CALL REACTION
 
-function mail(action, params) {
-    console("a implementer")
-}
-
-function test_R(action, params) {
+function test_R(action, uid, params) {
     console.log(params)
 }
 
@@ -31,12 +27,57 @@ function callReaction(name, uid, params) {
         data['action'].forEach(element => {
             if (element.name == name) {
                 element["reaction"].forEach(reaction => {
-                    reactionList[reaction](name, params);
+                    reactionList[reaction](name, uid, params);
                 })
             }
         });
     })
 }
+
+function mail(action, uid, params) {
+    DBCommunicate.getUserByID(uid, function(data) {
+        var GoogleToken = ""
+        data["account_link"].forEach(element => {
+            if (element.name == "Google")
+                GoogleToken = element.token
+        });
+        const  options = { method: 'GET',
+            headers: { 'Authorization': `Bearer ${GoogleToken}` },
+            mode: 'cors',
+            cache: 'default',
+            url: 'https://www.googleapis.com/oauth2/v1/userinfo'
+        };
+
+        axios.request(options).then(function (response) {
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: 'dws.area1@gmail.com',
+                  pass: 'DWS.area1'
+                }
+            });
+        
+            var mailOptions = {
+                from: 'dws.area1@gmail.com',
+                to: response.data.email,
+                subject: "DWS: " + action,
+                text: params
+            };
+        
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            });
+        }).catch(function (error) {
+            console.error("ERROR: MAIL");
+            console.error(error)
+        });
+    })
+}
+  
 
 //////////////////////////////////////
 
@@ -74,34 +115,47 @@ function updateMail(uid, data, pos) {
     })
 }
 
-function yammerMessageReceived(uid, data, pos) {
+
+function getCalendar(uid, data, pos) {
     DBCommunicate.getUserByID(uid, function(data) {
-        MicrosoftToken = ""
+        GoogleToken = ""
         data["account_link"].forEach(element => {
-            if (element.name == "Microsoft")
-            MicrosoftToken = element.token
+            if (element.name == "Google")
+                GoogleToken = element.token
         });
         var options = { method: 'GET',
-            headers: { 'Authorization': `Bearer ${MicrosoftToken}` },
+            headers: { 'Authorization': `Bearer ${GoogleToken}` },
             mode: 'cors',
             cache: 'default',
-            url: 'https://www.googleapis.com/gmail/v1/users/me/history'
+            url: 'https://www.googleapis.com/calendar/v3/calendars/primary/events'
         };
-        client = new YammerAPIClient({ token: {MicrosoftToken} });
-        client.messages.received({limit: 10, reverse: true }, function(error, data) {
-            if(error)
-                console.log("There was an error retrieving the data");
-            else {
-                console.log("** Data was retrieved **");
-                callReaction("Yammer msg reçu", uid, data);
-            }
-        })
-    });
-}
+
+        axios.request(options).then(function (response) {
+            const d = new Date()
+            var lr = data["action"][pos]["last_res"]
+            console.log(lr)
+            response.data.items.forEach(items => {
+                if (!lr.crdate.includes(items.created)) {
+                    var dv = new Date(items.start.dateTime)
+                    const diffTime = Math.ceil(Math.abs(dv - d) / (1000 * 60));
+                    if (diffTime <= 30) {
+                        callReaction("Calendar", uid, items.summary)
+                    }
+                    lr.crdate.push(items.created)
+                    DBCommunicate.replaceUserByID(uid, data);
+                }
+            })
+            data["action"][pos]["last_res"] = lr
+        }).catch(function (error) {
+            console.error("ERROR: CALENDAR");
+            console.error(error)
+        });
+    })
+  }
 
 function meteo(uid, data, pos) {
     const date = new Date();
-    if (data["action"][pos]["last_res"] == {} || data["action"][pos]["last_res"]['date'] != date.getDate()) {
+    if (data["action"][pos]["last_res"]['date'] != date.getDate()) {
     
         var axios = require("axios").default;
 
@@ -127,7 +181,7 @@ function meteo(uid, data, pos) {
 
 function horoscope(uid, data, pos) {
     const date = new Date();
-    if (data["action"][pos]["last_res"] == {} || data["action"][pos]["last_res"]['date'] != date.getDate()) {
+    if (data["action"][pos]["last_res"]['date'] != date.getDate()) {
         var options = {
             method: 'POST',
             url: 'https://sameer-kumar-aztro-v1.p.rapidapi.com/',

@@ -63,6 +63,8 @@ function Register() {
 function Settings() {
   return (
     <div>
+      <Navbar/>
+      <br/>
       <Oauth></Oauth>
     </div>
   )

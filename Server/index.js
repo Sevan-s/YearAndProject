@@ -120,16 +120,18 @@ app.get('/user/getAction/', (req, res) => {
 app.post('/user/switchAction/', (req, res) => {
   if (typeof req.body.name != 'undefined' ) {
     DBCommunicate.getUserByID(accountID, function(data) {
-      data['action'].forEach(element => {
-        if (element.name == req.body.name) {
-          if (element.activate)
-            element.activate = false;
-          else
-            element.activate = true;
-          console.log("Action switch.");
-        }
-      });
-      DBCommunicate.replaceUserByID(accountID, data);
+      if (data != null) {
+        data['action'].forEach(element => {
+          if (element.name == req.body.name) {
+            if (element.activate)
+              element.activate = false;
+            else
+              element.activate = true;
+            console.log("Action switch.");
+          }
+        });
+        DBCommunicate.replaceUserByID(accountID, data);
+      }
     })
   }
 });
@@ -139,16 +141,18 @@ app.post('/user/switchAction/', (req, res) => {
 app.post('/user/switchReaction/', (req, res) => {
   if (typeof req.body.reaction != 'undefined' && typeof req.body.action != 'undefined') {
     DBCommunicate.getUserByID(accountID, function(data) {
-      data['action'].forEach(element => {
-        if (element.name == req.body.action) {
-          if (element['reaction'].includes(req.body.reaction))
+      if (data != null) {
+        data['action'].forEach(element => {
+          if (element.name == req.body.action) {
+            if (element['reaction'].includes(req.body.reaction))
             element['reaction'].splice(element['reaction'].indexOf(req.body.reaction), 1)
-          else
+            else
             element['reaction'].push(req.body.reaction)
-          console.log("Reaction switch")
-        }
-      });
-      DBCommunicate.replaceUserByID(accountID, data);
+            console.log("Reaction switch")
+          }
+        });
+        DBCommunicate.replaceUserByID(accountID, data);
+      }
     })
   }
 });
