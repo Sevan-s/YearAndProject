@@ -207,71 +207,87 @@ function getIp(req) {
   return (clientIp);
 }
 
-function getService() {
+function getService(req) {
+  const date = Date.now();
   var services = [
     {
-      "name": "Manga",
-      "widgets": [
-        {
-          "name": "Tendency",
-          "description": "Display a ranking of anime or manga",
-          "params": [{
-            "name": "manga",
-            "type": "bool"
-          },
-          {
-            "name": "anime",
-            "type": "bool"
+      "client ": {
+        "host": getIp(req)
+      },
+      "server ": {
+        "current_time ": date,
+        "services ": [{
+          "name": "Gmail",
+          "actions ": [{
+            "name": "new_mail",
+            "description ": "A new mail is received by the user"
+          }],
+          "reactions ": [{
+            "name": "send_mail",
+            "description ": "The user received a mail"
           }]
-        },
-        {
-          "name": "Manga",
-          "description": "Display caracteristics of a manga",
-          "params": [{
-            "name": "manga",
-            "type": "string"
+        }, {
+          "name": "Horoscope",
+          "actions ": [{
+            "name": "get_daily_horoscope",
+            "description ": "Give the horoscope of the day"
           }]
-        }
-      ]
-    },
-    {
-      "name": "Traduction",
-      "widgets": [{
-          "name": "kanji_to_english",
-          "description": "Traduct kanji to english",
-          "params": [{
-            "name": "kanji",
-            "type": "string"
+        }, {
+          "name": "Weather",
+          "actions ": [{
+            "name": "get_weather",
+            "description ": "Give the weather of Toulouse"
           }]
-        },
-        {
-          "name": "english_to_kanji",
-          "description": "Traduct english word to japanese",
-          "params": [{
-            "name": "word",
-            "type": "string"
+        }, {
+          "name": "Calendar",
+          "actions ": [{
+            "name": "get_up_coming_event",
+            "description ": "Look at the up coming events in the user's calendar"
           }]
-        }
-      ]},
-    {
-      "name": "Youtube",
-      "widgets": [{
-          "name": "youtube_video",
-          "description": "search video on youtube",
-          "params": [{
-            "name": "video",
-            "type": "string"
+        }, {
+          "name": "Cryptomoney",
+          "actions ": [{
+            "name": "get_bitcoin_price",
+            "description ": "Give the price of a bitcoin every hour"
           }]
-        },
-        {
-          "name": "channel_stats",
-          "description": "show the stats of a youtube channel",
-          "params": [{
-            "name": "url",
-            "type": "string"
+        }, {
+          "name": "Covid",
+          "actions ": [{
+            "name": "get_stat_covid_french",
+            "description ": "Give some stats about the COVID situation in France every day"
           }]
-        }
-      ]
+        }, {
+          "name": "Khaby Lame Story",
+          "actions ": [{
+            "name": "get_khaby_lame_story",
+            "description ": "Give Khaby Lame instagram's stories"
+          }]
+        }, {
+          "name": "World News Fr",
+          "actions ": [{
+            "name": "get_world_news_fr",
+            "description ": "Give the world news in French every day"
+          }]
+        }, {
+          "name": "TheBestJoke",
+          "actions ": [{
+            "name": "get_best_joke",
+            "description ": "Give a joke every day"
+          }]
+        }, {
+          "name": "GameNews",
+          "actions ": [{
+            "name": "get_game_news",
+            "description ": "Give news about video games every day"
+          }]
+        }, {
+          "name": "TopNetflix",
+          "actions ": [{
+            "name": "get_top_ten_netflix",
+            "description ": "Give the top 10 of Netflix every week"
+          }]
+        },]
+      }
     }
   ]
   return (services);
@@ -279,7 +295,7 @@ function getService() {
 
 app.get('/about.json', (req, res) => {
   const date = Date.now();
-  res.json({"client" : {"ip": getIp(req)}, "server": {"current_time": date, "services": getService()}});
+  res.json(getService(req));
 });
 
 /////////////////////

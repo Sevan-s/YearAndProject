@@ -97,7 +97,7 @@ function addUser(username, password, OAUTH, callback) {
             desc: "Info du Covid en France",
             last_res: {'date': -1}
         }, {
-            name: "TekStory",
+            name: "KhabyLameStory",
             activate: false,
             reaction: [],
             reaction_allow: ["Debug", "Mail"],
@@ -164,7 +164,7 @@ function replaceUserByID(accountID, data) {
 //////////////////////////////
 
 function connect() {
-    r.connect({host: '172.25.0.2', port: 28015}, function(err, conn) {
+    r.connect({host: '172.19.0.2', port: 28015}, function(err, conn) {
         if (err) {
             console.log(err);
             setTimeout(connect, 1000);

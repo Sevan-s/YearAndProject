@@ -5,7 +5,7 @@ const { Client, Intents } = require('discord.js');
 
 //////////////////////////////// QUEUE
 
-const APIRequestList = { "Debug": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar, "Crypto": crypto, "Covid": GetCovidFrenchStat, "TekStory": GetTekNatioStory, "WolrdNewsFr": WolrdNewsFr, "TheBestJoke": TheBestJoke, "GameNews": GameNews, "TopNetflix": TopNetflix}
+const APIRequestList = { "Debug": test_A, "new Mail": updateMail, "Horoscope": horoscope, "Meteo": meteo, "Calendar": getCalendar, "Crypto": crypto, "Covid": GetCovidFrenchStat, "KhabyLameStory": GetKhabyLameStory, "WolrdNewsFr": WolrdNewsFr, "TheBestJoke": TheBestJoke, "GameNews": GameNews, "TopNetflix": TopNetflix}
 
 const reactionList = { "Debug": test_R, "Mail": mail, "Message": message }
 
@@ -188,7 +188,7 @@ function updateMail(uid, data, pos) {
                 data["action"][pos]["last_res"].total = response.data.messagesTotal
                 DBCommunicate.replaceUserByID(uid, data);
             } else if (data["action"][pos]["last_res"].total != response.data.messagesTotal) {
-                callReaction("new Mail", uid, response.data.messagesTotal);
+                callReaction("new Mail", uid, "New mail");
                 data["action"][pos]["last_res"] = { "total": response.data.messagesTotal }
                 DBCommunicate.replaceUserByID(uid, data);
             } else {
@@ -257,7 +257,7 @@ function meteo(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            callReaction("Meteo", uid, response.data);
+            callReaction("Meteo", uid, JSON.stringify(response.data, null, 2));
             data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function (error) {
@@ -300,7 +300,7 @@ function GetCovidFrenchStat(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            callReaction("Covid", uid, response.data);
+            callReaction("Covid", uid, JSON.stringify(response.data, null, 2));
             data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
@@ -309,7 +309,7 @@ function GetCovidFrenchStat(uid, data, pos) {
     }
 }
 
-function GetTekNatioStory(uid, data, pos) {
+function GetKhabyLameStory(uid, data, pos) {
     const date = new Date();
     var axios = require("axios").default;
     var options = {
@@ -323,11 +323,11 @@ function GetTekNatioStory(uid, data, pos) {
     };
 
     axios.request(options).then(function (response) {
-        callReaction("TekStory", uid, response.data);
+        callReaction("KhabyLameStory", uid, JSON.stringify(response.data, null, 2));
         data["action"][pos]["last_res"] = { "date": date.getDate() }
         DBCommunicate.replaceUserByID(uid, data);
     }).catch(function () {
-        console.error("ERROR: TekStory");
+        console.error("ERROR: KhabyLameStory");
     });
 }
 
@@ -346,7 +346,7 @@ function horoscope(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            callReaction("Horoscope", uid, response.data);
+            callReaction("Horoscope", uid, JSON.stringify(response.data, null, 2));
             data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function (_) {
@@ -369,7 +369,7 @@ function WolrdNewsFr(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            callReaction("WolrdNewsFr", uid, response.data);
+            callReaction("WolrdNewsFr", uid, JSON.stringify(response.data, null, 2));
             data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
@@ -397,7 +397,7 @@ function TheBestJoke(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            callReaction("TheBestJoke", uid, response.data);
+            callReaction("TheBestJoke", uid, JSON.stringify(response.data, null, 2));
             data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
@@ -419,7 +419,7 @@ function GameNews(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            callReaction("GameNews", uid, response.data);
+            callReaction("GameNews", uid, JSON.stringify(response.data, null, 2));
             data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
@@ -442,7 +442,7 @@ function TopNetflix(uid, data, pos) {
         };
 
         axios.request(options).then(function (response) {
-            callReaction("TopNetflix", uid, response.data);
+            callReaction("TopNetflix", uid, JSON.stringify(response.data, null, 2));
             data["action"][pos]["last_res"] = { "date": date.getDate() }
             DBCommunicate.replaceUserByID(uid, data);
         }).catch(function () {
