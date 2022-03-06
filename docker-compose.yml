@@ -10,7 +10,7 @@ services:
     networks:
       - backend
   client_mobile:
-    build: Mobile/
+    build: ./
     volumes:
       - common:/apk
   client_web:

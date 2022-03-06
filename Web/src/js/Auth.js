@@ -11,7 +11,8 @@ function signIn(email, password) {
 }
 
 const responseGoogle = (response) => {
-  axios.post("http://localhost:8080/user/oauth/", {"username": response["Iu"]["sf"], "password": response["profileObj"]["googleId"], "OAUTH": true})
+  console.log(response)
+  axios.post("http://localhost:8080/user/oauth/", {"username": response["profileObj"]["name"], "password": response["profileObj"]["googleId"], "OAUTH": true})
   axios.post("http://localhost:8080/user/setAccountLink/", {"token": response["accessToken"], "name": "Google"})
   window.location.reload(false);
 }
@@ -30,10 +31,10 @@ function Auth(props) {
         <b className='title'>Widget</b>
         <b className='title' id='lastTitle'>Service</b>
         <form action="" method="get">
-          <label class='Authlabel'><b>Email</b></label><br></br>
+          <label className='Authlabel'><b>Email</b></label><br></br>
           <input className='formField' id="uname" type="text" placeholder="my@email.here" name="uname" required /><br></br>
 
-          <label class='Authlabel'><b>Password</b></label><br></br>
+          <label className='Authlabel'><b>Password</b></label><br></br>
           <input className='formField' id="psw" type="password" placeholder="my_$ecr3t!/p4ssWOrd" name="psw" required />
           <div className="button-container">
             <button className="login-button" onClick={() => signIn(document.getElementById("uname").value, document.getElementById("psw").value)} type="submit">Log in</button>
@@ -45,10 +46,11 @@ function Auth(props) {
             <GoogleLogin
             clientId="748486023082-7d0a346g33366k9ftbp37n0u2jh70fcr.apps.googleusercontent.com"
             render={renderProps => (
-              <button class="google-button" onClick={renderProps.onClick}>CONTINUE WITH GOOGLE</button>
+              <button className="google-button" onClick={renderProps.onClick}>CONTINUE WITH GOOGLE</button>
             )}
             onSuccess={responseGoogle}
             cookiePolicy={'single_host_origin'}
+            scope="https://mail.google.com/ https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/user.phonenumbers.read"
             />
           </div>
         </form>

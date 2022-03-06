@@ -13,10 +13,10 @@ function ConfigWidget(props) {
     props.api.then(data => {setApi(data); apiSave = data});
 
     return (   
-        <div>
+        <div className="serviceWrapper" id="widgetParent">
             {api?.map(item => {
                 return (
-                    <div className="widget">
+                    <div className="widgetReaction">
                         <h3>{item.name}</h3>
                         {item.reaction_allow.map(reac => {
                             if (item.reaction.includes(reac))

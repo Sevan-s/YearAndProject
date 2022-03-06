@@ -24,7 +24,6 @@ function App() {
         <Route path="/Home" element={<Home/>} />
         <Route path="/Config" element={<Config/>} />
         <Route path="/settings" element={<Settings/>} />
-        <Route path="/user" element={<Home/>} />
         <Route path="/disconnect" element={<Disconnect/>} />
         <Route path="/about.json" element={<About about={getAbout()}/>} />
       </Routes>
@@ -63,6 +62,8 @@ function Register() {
 function Settings() {
   return (
     <div>
+      <Navbar/>
+      <br/>
       <Oauth></Oauth>
     </div>
   )

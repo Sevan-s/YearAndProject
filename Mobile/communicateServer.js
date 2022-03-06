@@ -4,6 +4,15 @@ ip = "192.168.1.14"
 
 ////////////////// ACTION
 
+function oauthGoogle(result) {
+  axios.post(`http://${ip}:8080/user/oauth/`, {"username": result.authentication.accessToken , "password": result.authentication.accessToken, "OAUTH": true})
+  axios.post(`http://${ip}:8080/user/setAccountLink/`, {"token": result.authentication.accessToken, "name": "Google"})
+}
+
+function setToken(name, token) {
+  axios.post(`http://${ip}:8080/user/setAccountLink/`, {"token": token, "name": name})
+}
+
 function switchAction(name) {
     axios.post(`http://${ip}:8080/user/switchAction/`, {"name": name});
 }
@@ -53,4 +62,4 @@ function disconnect() {
 
 ////////////////////////
 
-module.exports = {getConnectVal, connect, createUser, getAction, switchAction, switchReaction, disconnect}
+module.exports = {getConnectVal, connect, createUser, getAction, switchAction, switchReaction, disconnect, oauthGoogle, setToken}
