@@ -164,7 +164,7 @@ function replaceUserByID(accountID, data) {
 //////////////////////////////
 
 function connect() {
-    r.connect({host: '172.19.0.2', port: 28015}, function(err, conn) {
+    r.connect({host: '192.168.0.2', port: 28015}, function(err, conn) {
         if (err) {
             console.log(err);
             setTimeout(connect, 1000);

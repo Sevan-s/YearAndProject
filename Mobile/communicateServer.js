@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-ip = "192.168.1.14"
+ip = "192.168.1.105"
 
 ////////////////// ACTION
 

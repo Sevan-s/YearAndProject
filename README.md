@@ -2,7 +2,7 @@
 
 ## Server + Web + Database
 
-> /!\ si c'est la première fois il faudra changer l'ip présent dans /Server/communicateDB.js par l'ip donnée par rethinkdb lors du lancement, puis relancer via docker-compose up --build
+> /!\ si c'est la première fois il faudra changer l'ip présent dans /Server/communicateDB.js par l'ip donnée par rethinkdb lors du lancement, puis relancer via docker-compose up --build --force-recreate
 
 Tout ce passe sur docker:
 - lancer le projet
@@ -12,7 +12,7 @@ docker-compose up
 
 - mettre à jour les dockers en cas de modification du code
 ```sh
-docker-compose up --build
+docker-compose up --build --force-recreate
 ```
 
 - suppimer les dockers
